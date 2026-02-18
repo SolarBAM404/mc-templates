@@ -1,0 +1,22 @@
+package ${MAIN_CLASS.packageName}.datagen.providers;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
+
+public class ModLootTableProvider extends SimpleFabricLootTableProvider {
+    public ModLootTableProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture, LootContextParamSets.BLOCK);
+    }
+
+    @Override
+    public void accept(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
+        // biConsumer.accept(ModBlocks.EXAMPLE_BLOCK.get().getLootTable(), BlockLootSubProvider.createSelfDrop(ModBlocks.EXAMPLE_BLOCK.get()));
+    }
+}

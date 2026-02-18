@@ -30,9 +30,14 @@ configurations {
         canBeResolved = false
         canBeConsumed = true
     }
+    commonGeneratedResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
 }
 
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
     commonResources sourceSets.main.resources.sourceDirectories.singleFile
+    commonGeneratedResources file('src/generated/resources')
 }

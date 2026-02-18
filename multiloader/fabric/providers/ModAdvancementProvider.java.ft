@@ -1,0 +1,23 @@
+package ${MAIN_CLASS.packageName}.datagen.providers;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+
+public class ModAdvancementProvider extends FabricAdvancementProvider {
+    public ModAdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture);
+    }
+
+    @Override
+    public void generateAdvancement(HolderLookup.Provider registryLookup, Consumer<AdvancementHolder> consumer) {
+        // Advancement.Builder.create()
+        //     .display(ModItems.EXAMPLE_ITEM.get(), Text.literal("Example Advancement"), ...)
+        //     .save(consumer, "example_advancement");
+    }
+}

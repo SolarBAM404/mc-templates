@@ -1,0 +1,19 @@
+package ${MAIN_CLASS.packageName}.datagen.providers;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.core.HolderLookup;
+
+import java.util.concurrent.CompletableFuture;
+
+public class ModLanguageProvider extends FabricLanguageProvider {
+    public ModLanguageProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture, "en_us");
+    }
+
+    @Override
+    public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
+        // translationBuilder.add(ModItems.EXAMPLE_ITEM.get(), "Example Item");
+        // translationBuilder.add(ModBlocks.EXAMPLE_BLOCK.get(), "Example Block");
+    }
+}

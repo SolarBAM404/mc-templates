@@ -35,3 +35,11 @@ loom {
         }
     }
 }
+
+def commonGeneratedResource = project(':common').file("src/generated/resources")
+
+fabricApi {
+    configureDataGeneration() {
+        output.set(commonGeneratedResource)
+    }
+}

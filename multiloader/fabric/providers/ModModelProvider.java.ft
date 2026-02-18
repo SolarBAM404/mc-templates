@@ -1,0 +1,22 @@
+package ${MAIN_CLASS.packageName}.datagen.providers;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.data.models.BlockModelGenerators;
+import net.minecraft.data.models.ItemModelGenerators;
+
+public class ModModelProvider extends FabricModelProvider {
+    public ModModelProvider(FabricDataOutput output) {
+        super(output);
+    }
+
+    @Override
+    public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        // blockStateModelGenerator.createTrivialCube(ModBlocks.EXAMPLE_BLOCK.get());
+    }
+
+    @Override
+    public void generateItemModels(ItemModelGenerators itemModelGenerator) {
+        // itemModelGenerator.generateFlatItem(ModItems.EXAMPLE_ITEM.get(), Models.GENERATED);
+    }
+}

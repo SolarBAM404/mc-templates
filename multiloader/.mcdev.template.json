@@ -288,6 +288,43 @@
       "destination": "fabric/src/main/resources/fabric.mod.json"
     },
     {
+      "template": "fabric/FabricDataGenerator.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/FabricDataGenerator.java"
+    },
+    {
+      "template": "fabric/providers/ModModelProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModModelProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModBlockTagProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModBlockTagProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModItemTagProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModItemTagProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModLootTableProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModLootTableProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModRecipeProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModRecipeProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModLanguageProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModLanguageProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModAdvancementProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModAdvancementProvider.java"
+    },
+    {
+      "template": "fabric/providers/ModDynamicRegistryProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModDynamicRegistryProvider.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
+    },
+    {
       "template": "forge/build.gradle.ft",
       "destination": "forge/build.gradle"
     },
