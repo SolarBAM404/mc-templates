@@ -1,0 +1,34 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
+import net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect;
+import net.minecraft.world.item.enchantment.effects.ValueEffect;
+
+public class ModEnchantments {
+
+    // Example Effects
+    // public static final MapCodec<ExampleEntityEffect> ENTITY_EFFECT = registerEntityEffect("example_entity_effect", ExampleEntityEffect.CODEC);
+    // public static final MapCodec<ExampleLocationEffect> LOCATION_EFFECT = registerLocationEffect("example_location_effect", ExampleLocationEffect.CODEC);
+    // public static final MapCodec<ExampleValueEffect> VALUE_EFFECT = registerValueEffect("example_value_effect", ExampleValueEffect.CODEC);
+
+    private static <T extends EnchantmentEntityEffect> MapCodec<T> registerEntityEffect(String name, MapCodec<T> codec) {
+        return Services.REGISTRY.registerEnchantmentEntityEffect(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name), codec);
+    }
+
+    private static <T extends EnchantmentLocationBasedEffect> MapCodec<T> registerLocationEffect(String name, MapCodec<T> codec) {
+        return Services.REGISTRY.registerEnchantmentLocationEffect(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name), codec);
+    }
+
+    private static <T extends ValueEffect> MapCodec<T> registerValueEffect(String name, MapCodec<T> codec) {
+        return Services.REGISTRY.registerEnchantmentValueEffect(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name), codec);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Enchantment Effects for " + Constants.MOD_NAME);
+    }
+}

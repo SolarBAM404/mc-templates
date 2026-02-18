@@ -1,0 +1,27 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.UnaryOperator;
+
+public class ModDataComponents {
+
+    // Example Component
+    // public static final Holder<DataComponentType<Boolean>> EXAMPLE_COMPONENT = register("example_component", builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
+    private static <T> Holder<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builder) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerDataComponent(id, builder);
+        return Services.REGISTRY.getDataComponent(id);
+    }
+
+    // Note: Data Components usually don't need a register() call to trigger static init if they are used by items/blocks,
+    // but we can provide one if we want explicit registration early.
+    public static void register() {
+         Constants.LOG.debug("Registering Data Components for " + Constants.MOD_NAME);
+    }
+}

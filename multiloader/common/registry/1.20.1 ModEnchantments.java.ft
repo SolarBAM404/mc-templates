@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+ 
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
+ 
+import java.util.function.Supplier;
+ 
+public class ModEnchantments {
+ 
+    // Example Enchantment
+    // public static final Holder<Enchantment> EXAMPLE_ENCHANTMENT = register("example_enchantment", () -> new ExampleEnchantment());
+ 
+    private static <T extends Enchantment> Holder<T> register(String name, Supplier<T> enchantment) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerEnchantment(id, enchantment);
+        return Services.REGISTRY.getEnchantment(id);
+    }
+ 
+    public static void register() {
+         Constants.LOG.debug("Registering Enchantments for " + Constants.MOD_NAME);
+    }
+}

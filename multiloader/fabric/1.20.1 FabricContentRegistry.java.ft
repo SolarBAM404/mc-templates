@@ -1,0 +1,223 @@
+package ${MAIN_CLASS.packageName}.platform;
+
+import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluid;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+/**
+ * Fabric implementation of the {@link IContentRegistry} service.
+ * Targeted for Minecraft 1.20.1.
+ */
+public class FabricContentRegistry implements IContentRegistry {
+
+    private final Map<ResourceLocation, Holder<?>> holders = new HashMap<>();
+
+    @Override
+    public <T extends Block> void registerBlock(ResourceLocation id, Supplier<T> block) {
+        holders.put(id, BuiltInRegistries.BLOCK.wrapAsHolder(Registry.register(BuiltInRegistries.BLOCK, id, block.get())));
+    }
+
+    @Override
+    public <T extends Item> void registerItem(ResourceLocation id, Supplier<T> item) {
+        holders.put(id, BuiltInRegistries.ITEM.wrapAsHolder(Registry.register(BuiltInRegistries.ITEM, id, item.get())));
+    }
+
+    @Override
+    public <T extends MobEffect> void registerEffect(ResourceLocation id, Supplier<T> effect) {
+        holders.put(id, BuiltInRegistries.MOB_EFFECT.wrapAsHolder(Registry.register(BuiltInRegistries.MOB_EFFECT, id, effect.get())));
+    }
+
+    @Override
+    public <T extends Entity> void registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity) {
+        holders.put(id, BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(Registry.register(BuiltInRegistries.ENTITY_TYPE, id, entity.get())));
+    }
+
+    @Override
+    public <T extends CreativeModeTab> void registerCreativeTab(ResourceLocation id, Supplier<T> tab) {
+        holders.put(id, BuiltInRegistries.CREATIVE_MODE_TAB.wrapAsHolder(Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, id, tab.get())));
+    }
+
+    @Override
+    public <T extends ArmorMaterial> void registerArmorMaterial(ResourceLocation id, Supplier<T> armorMaterial) {
+        // ArmorMaterial might not be a registry in 1.20.1 depending on the exact build, but typically it is handled as a standard registry if part of the interface.
+        // If it's not a registry, this might need a custom holder.
+        holders.put(id, BuiltInRegistries.ARMOR_MATERIAL.wrapAsHolder(Registry.register(BuiltInRegistries.ARMOR_MATERIAL, id, armorMaterial.get())));
+    }
+
+    @Override
+    public <T extends Fluid> void registerFluid(ResourceLocation id, Supplier<T> fluid) {
+        holders.put(id, BuiltInRegistries.FLUID.wrapAsHolder(Registry.register(BuiltInRegistries.FLUID, id, fluid.get())));
+    }
+
+    @Override
+    public <T extends Potion> void registerPotion(ResourceLocation id, Supplier<T> potion) {
+        holders.put(id, BuiltInRegistries.POTION.wrapAsHolder(Registry.register(BuiltInRegistries.POTION, id, potion.get())));
+    }
+
+    @Override
+    public <T extends SoundEvent> void registerSound(ResourceLocation id, Supplier<T> sound) {
+        holders.put(id, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Registry.register(BuiltInRegistries.SOUND_EVENT, id, sound.get())));
+    }
+
+    @Override
+    public <T extends BlockEntityType<?>> void registerBlockEntity(ResourceLocation id, Supplier<T> block) {
+        holders.put(id, BuiltInRegistries.BLOCK_ENTITY_TYPE.wrapAsHolder(Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, block.get())));
+    }
+
+    @Override
+    public <T extends Attribute> void registerAttribute(ResourceLocation id, Supplier<T> attribute) {
+        holders.put(id, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(Registry.register(BuiltInRegistries.ATTRIBUTE, id, attribute.get())));
+    }
+
+    @Override
+    public <T extends MenuType<?>> void registerMenu(ResourceLocation id, Supplier<T> menu) {
+        holders.put(id, BuiltInRegistries.MENU.wrapAsHolder(Registry.register(BuiltInRegistries.MENU, id, menu.get())));
+    }
+
+    @Override
+    public <T extends RecipeSerializer<?>> void registerRecipeSerializer(ResourceLocation id, Supplier<T> serializer) {
+        holders.put(id, BuiltInRegistries.RECIPE_SERIALIZER.wrapAsHolder(Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id, serializer.get())));
+    }
+
+    @Override
+    public <T extends RecipeType<?>> void registerRecipeType(ResourceLocation id, Supplier<T> type) {
+        holders.put(id, BuiltInRegistries.RECIPE_TYPE.wrapAsHolder(Registry.register(BuiltInRegistries.RECIPE_TYPE, id, type.get())));
+    }
+
+    @Override
+    public <T extends VillagerProfession> void registerVillagerProfession(ResourceLocation id, Supplier<T> profession) {
+        holders.put(id, BuiltInRegistries.VILLAGER_PROFESSION.wrapAsHolder(Registry.register(BuiltInRegistries.VILLAGER_PROFESSION, id, profession.get())));
+    }
+
+    @Override
+    public <T extends GameRules.Value<T>> GameRules.Key<T> registerGameRule(String name, GameRules.Category category, GameRules.Type<T> type) {
+        return GameRules.register(name, category, type);
+    }
+
+    @Override
+    public <T extends Enchantment> Holder<T> registerEnchantment(ResourceLocation id, Supplier<T> enchantment) {
+        Holder<T> holder = BuiltInRegistries.ENCHANTMENT.wrapAsHolder(Registry.register(BuiltInRegistries.ENCHANTMENT, id, enchantment.get()));
+        holders.put(id, holder);
+        return holder;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Block> Holder<T> getBlock(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Item> Holder<T> getItem(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Entity> Holder<EntityType<T>> getEntity(ResourceLocation id) {
+        return (Holder<EntityType<T>>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends MobEffect> Holder<T> getEffect(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends CreativeModeTab> Holder<T> getCreativeTab(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Enchantment> Holder<T> getEnchantment(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends ArmorMaterial> Holder<T> getArmorMaterial(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Fluid> Holder<T> getFluid(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Potion> Holder<T> getPotion(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends SoundEvent> Holder<T> getSound(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends BlockEntityType<?>> Holder<T> getBlockEntity(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Attribute> Holder<T> getAttribute(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends MenuType<?>> Holder<T> getMenu(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends RecipeType<?>> Holder<T> getRecipeType(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends VillagerProfession> Holder<T> getVillagerProfession(ResourceLocation id) {
+        return (Holder<T>) holders.get(id);
+    }
+}

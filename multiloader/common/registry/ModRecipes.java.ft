@@ -1,0 +1,33 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+
+import java.util.function.Supplier;
+
+public class ModRecipes {
+
+    // Example Recipe
+    // public static final Holder<RecipeSerializer<ExampleRecipe>> EXAMPLE_SERIALIZER = registerSerializer("example_recipe", ExampleRecipe.Serializer::new);
+    // public static final Holder<RecipeType<ExampleRecipe>> EXAMPLE_TYPE = registerType("example_recipe", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "example_recipe")));
+
+    private static <T extends RecipeSerializer<?>> Holder<T> registerSerializer(String name, Supplier<T> serializer) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerRecipeSerializer(id, serializer);
+        return Services.REGISTRY.getRecipeSerializer(id);
+    }
+
+    private static <T extends RecipeType<?>> Holder<T> registerType(String name, Supplier<T> type) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerRecipeType(id, type);
+        return Services.REGISTRY.getRecipeType(id);
+    }
+
+    public static void register() {
+        Constants.LOG.debug("Registering Recipes for " + Constants.MOD_NAME);
+    }
+}

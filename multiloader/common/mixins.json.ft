@@ -4,9 +4,11 @@
   "package": "${MAIN_CLASS.packageName}.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_18",
-  "mixins": [],
+  "mixins": [
+    
+  ],
   "client": [
-    "MixinMinecraft"
+  
   ],
   "server": [],
   "injectors": {

@@ -11,7 +11,10 @@
       "name": "MC_VERSION",
       "type": "semantic_version",
       "options": [
-        "1.21"
+        "1.20.1",
+        "1.21.1",
+        "1.21.11",
+        "26.1"
       ]
     },
     {
@@ -19,7 +22,9 @@
       "type": "string",
       "validator": "[a-z][a-z0-9-_]{1,63}",
       "derives": {
-        "parents": ["PROJECT_NAME"],
+        "parents": [
+          "PROJECT_NAME"
+        ],
         "method": "replace",
         "parameters": {
           "regex": "[^a-z0-9-_]+",
@@ -38,7 +43,10 @@
       "name": "MAIN_CLASS",
       "type": "class_fqn",
       "derives": {
-        "parents": ["BUILD_COORDS", "MOD_ID"],
+        "parents": [
+          "BUILD_COORDS",
+          "MOD_ID"
+        ],
         "method": "suggestClassName"
       }
     },
@@ -71,10 +79,12 @@
       "name": "JAVA_VERSION",
       "type": "integer",
       "order": 20,
-      "default": 17,
+      "default": 21,
       "visible": false,
       "derives": {
-        "parents": ["MC_VERSION"],
+        "parents": [
+          "MC_VERSION"
+        ],
         "method": "recommendJavaVersionForMcVersion",
         "default": 17
       }
@@ -125,8 +135,14 @@
       "destination": "buildSrc/src/main/groovy/multiloader-loader.gradle"
     },
     {
-      "template": "common/build.gradle.ft",
-      "destination": "common/build.gradle"
+      "template": "common/1.20.1 build.gradle.ft",
+      "destination": "common/build.gradle",
+      "condition": "${MC_VERSION} == '1.20.1'"
+    },
+    {
+      "template": "common/1.21+ build.gradle.ft",
+      "destination": "common/build.gradle",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "common/MixinMinecraft.java.ft",
@@ -135,6 +151,10 @@
     {
       "template": "common/IPlatformHelper.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/platform/services/IPlatformHelper.java"
+    },
+    {
+      "template": "common/${MC_VERSION} IContentRegistry.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/platform/services/IContentRegistry.java"
     },
     {
       "template": "common/Services.java.ft",
@@ -157,6 +177,69 @@
       "destination": "common/src/main/resources/pack.mcmeta"
     },
     {
+      "template": "common/registry/ModAttributes.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModAttributes.java"
+    },
+    {
+      "template": "common/registry/ModBlockEntities.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlockEntities.java"
+    },
+    {
+      "template": "common/registry/ModBlocks.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlocks.java"
+    },
+    {
+      "template": "common/registry/ModCreativeTabs.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModCreativeTabs.java"
+    },
+    {
+      "template": "common/registry/ModDataComponents.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModDataComponents.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
+    },
+    {
+      "template": "common/registry/ModEffects.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEffects.java"
+    },
+    {
+      "template": "common/registry/1.20.1 ModEnchantments.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEnchantments.java",
+      "condition": "${MC_VERSION} == '1.20.1'"
+    },
+    {
+      "template": "common/registry/1.21+ ModEnchantments.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEnchantments.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
+    },
+    {
+      "template": "common/registry/ModEntities.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEntities.java"
+    },
+    {
+      "template": "common/registry/ModItems.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModItems.java"
+    },
+    {
+      "template": "common/registry/ModMenus.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModMenus.java"
+    },
+    {
+      "template": "common/registry/ModParticles.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModParticles.java"
+    },
+    {
+      "template": "common/registry/ModRecipes.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModRecipes.java"
+    },
+    {
+      "template": "common/registry/ModSoundEvents.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModSoundEvents.java"
+    },
+    {
+      "template": "common/registry/ModTags.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModTags.java"
+    },
+    {
       "template": "fabric/build.gradle.ft",
       "destination": "fabric/build.gradle"
     },
@@ -169,12 +252,20 @@
       "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/platform/FabricPlatformHelper.java"
     },
     {
+      "template": "fabric/${MC_VERSION} FabricContentRegistry.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/platform/FabricContentRegistry.java"
+    },
+    {
       "template": "fabric/MixinTitleScreen.java.ft",
       "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java"
     },
     {
       "template": "fabric/service.IPlatformHelper.ft",
       "destination": "fabric/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IPlatformHelper"
+    },
+    {
+      "template": "fabric/service.IContentRegistry.ft",
+      "destination": "fabric/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IContentRegistry"
     },
     {
       "template": "fabric/fabric.mixins.json.ft",
@@ -197,12 +288,20 @@
       "destination": "forge/src/main/java/${MAIN_CLASS.packagePath}/platform/ForgePlatformHelper.java"
     },
     {
+      "template": "forge/${MC_VERSION} ForgeContentRegistry.java.ft",
+      "destination": "forge/src/main/java/${MAIN_CLASS.packagePath}/platform/ForgeContentRegistry.java"
+    },
+    {
       "template": "forge/MixinTitleScreen.java.ft",
       "destination": "forge/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java"
     },
     {
       "template": "forge/service.IPlatformHelper.ft",
       "destination": "forge/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IPlatformHelper"
+    },
+    {
+      "template": "forge/service.IContentRegistry.ft",
+      "destination": "forge/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IContentRegistry"
     },
     {
       "template": "forge/forge.mixins.json.ft",
@@ -214,31 +313,48 @@
     },
     {
       "template": "neoforge/build.gradle.ft",
-      "destination": "neoforge/build.gradle"
+      "destination": "neoforge/build.gradle",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "neoforge/ExampleMod.java.ft",
-      "destination": "neoforge/src/main/java/${MAIN_CLASS.path}.java"
+      "destination": "neoforge/src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "neoforge/NeoForgePlatformHelper.java.ft",
-      "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/platform/NeoForgePlatformHelper.java"
+      "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/platform/NeoForgePlatformHelper.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
+    },
+    {
+      "template": "neoforge/${MC_VERSION} NeoForgeContentRegistry.java.ft",
+      "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/platform/NeoForgeContentRegistry.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "neoforge/MixinTitleScreen.java.ft",
-      "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java"
+      "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "neoforge/service.IPlatformHelper.ft",
-      "destination": "neoforge/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IPlatformHelper"
+      "destination": "neoforge/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IPlatformHelper",
+      "condition": "${MC_VERSION} != '1.20.1'"
+    },
+    {
+      "template": "neoforge/service.IContentRegistry.ft",
+      "destination": "neoforge/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IContentRegistry",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "neoforge/neoforge.mixins.json.ft",
-      "destination": "neoforge/src/main/resources/${MOD_ID}.neoforge.mixins.json"
+      "destination": "neoforge/src/main/resources/${MOD_ID}.neoforge.mixins.json",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "neoforge/neoforge.mods.toml.ft",
-      "destination": "neoforge/src/main/resources/META-INF/neoforge.mods.toml"
+      "destination": "neoforge/src/main/resources/META-INF/neoforge.mods.toml",
+      "condition": "${MC_VERSION} != '1.20.1'"
     }
   ],
   "finalizers": [
@@ -247,7 +363,10 @@
     },
     {
       "type": "run_gradle_tasks",
-      "tasks": ["wrapper", "genIntellijRuns"]
+      "tasks": [
+        "wrapper",
+        "genIntellijRuns"
+      ]
     },
     {
       "type": "git_add_all",

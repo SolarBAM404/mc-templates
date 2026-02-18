@@ -1,0 +1,28 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.function.Supplier;
+
+public class ModBlocks {
+
+    // Example Block
+    // public static final Holder<Block> EXAMPLE_BLOCK = register("example_block", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
+
+    private static <T extends Block> Holder<T> register(String name, Supplier<T> block) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerBlock(id, block);
+        return Services.REGISTRY.getBlock(id);
+    }
+
+    public static void register() {
+        // This method is called to trigger static field initialization
+        Constants.LOG.debug("Registering Blocks for " + Constants.MOD_NAME);
+    }
+}
