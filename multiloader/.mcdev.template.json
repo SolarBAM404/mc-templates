@@ -111,8 +111,14 @@
       "destination": "LICENSE.txt"
     },
     {
-      "template": "build.gradle.ft",
-      "destination": "build.gradle"
+      "template": "1.20.1 build.gradle.ft",
+      "destination": "build.gradle",
+      "condition": "${MC_VERSION} == '1.20.1'"
+    },
+    {
+      "template": "1.21+ build.gradle.ft",
+      "destination": "build.gradle",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "settings.gradle.ft",
@@ -127,8 +133,14 @@
       "destination": "buildSrc/build.gradle"
     },
     {
-      "template": "buildSrc/multiloader-common.gradle.ft",
-      "destination": "buildSrc/src/main/groovy/multiloader-common.gradle"
+      "template": "buildSrc/1.20.1 multiloader-common.gradle.ft",
+      "destination": "buildSrc/src/main/groovy/multiloader-common.gradle",
+      "condition": "${MC_VERSION} == '1.20.1'"
+    },
+    {
+      "template": "buildSrc/1.21+ multiloader-common.gradle.ft",
+      "destination": "buildSrc/src/main/groovy/multiloader-common.gradle",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "buildSrc/multiloader-loader.gradle.ft",
