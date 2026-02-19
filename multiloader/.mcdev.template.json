@@ -268,10 +268,6 @@
       "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/platform/FabricContentRegistry.java"
     },
     {
-      "template": "fabric/MixinTitleScreen.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java"
-    },
-    {
       "template": "fabric/service.IPlatformHelper.ft",
       "destination": "fabric/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IPlatformHelper"
     },
@@ -341,10 +337,6 @@
       "destination": "forge/src/main/java/${MAIN_CLASS.packagePath}/platform/ForgeContentRegistry.java"
     },
     {
-      "template": "forge/MixinTitleScreen.java.ft",
-      "destination": "forge/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java"
-    },
-    {
       "template": "forge/service.IPlatformHelper.ft",
       "destination": "forge/src/main/resources/META-INF/services/${MAIN_CLASS.packageName}.platform.services.IPlatformHelper"
     },
@@ -378,11 +370,6 @@
     {
       "template": "neoforge/${MC_VERSION} NeoForgeContentRegistry.java.ft",
       "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/platform/NeoForgeContentRegistry.java",
-      "condition": "${MC_VERSION} != '1.20.1'"
-    },
-    {
-      "template": "neoforge/MixinTitleScreen.java.ft",
-      "destination": "neoforge/src/main/java/${MAIN_CLASS.packagePath}/mixin/MixinTitleScreen.java",
       "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
