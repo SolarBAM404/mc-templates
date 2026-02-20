@@ -30,9 +30,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
+import java.util.Map;
 
 /**
  * Forge implementation of the {@link IContentRegistry} service.
@@ -47,7 +46,7 @@ public class ForgeContentRegistry implements IContentRegistry {
     private <T> DeferredRegister<T> getRegister(ResourceKey<Registry<T>> key) {
         return (DeferredRegister<T>) registers.computeIfAbsent(key, k -> {
             DeferredRegister<T> register = DeferredRegister.create(key, Constants.MOD_ID);
-            register.register(FMLJavaModLoadingContext.get().getModEventBus());
+            register.register(${MAIN_CLASS.className}.getContext().getModEventBus());
             return register;
         });
     }

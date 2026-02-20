@@ -1,5 +1,7 @@
 package ${MAIN_CLASS.packageName}.platform.services;
 
+import java.util.function.Supplier;
+
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -21,7 +23,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
 
-import java.util.function.Supplier;
 
 /**
  * Service interface for registering and retrieving game content across platforms.

@@ -1,5 +1,7 @@
 package ${MAIN_CLASS.packageName}.platform;
 
+import java.util.function.Supplier;
+
 import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -26,7 +28,6 @@ import net.minecraft.world.level.material.Fluid;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * Fabric implementation of the {@link IContentRegistry} service.

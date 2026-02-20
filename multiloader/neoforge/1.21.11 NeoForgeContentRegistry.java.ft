@@ -15,9 +15,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
@@ -26,8 +24,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect;
-import net.minecraft.world.item.enchantment.effects.ValueEffect;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
@@ -35,8 +32,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -48,7 +43,7 @@ public class NeoForgeContentRegistry implements IContentRegistry {
 
     private static IEventBus modBus;
     private final Map<ResourceKey<? extends Registry<?>>, DeferredRegister<?>> registers = new HashMap<>();
-    private final Map<ResourceLocation, DeferredHolder<?, ?>> objects = new HashMap<>();
+    private final Map<Identifier, DeferredHolder<?, ?>> objects = new HashMap<>();
 
     /**
      * Sets the mod event bus for registrations.
@@ -94,10 +89,6 @@ public class NeoForgeContentRegistry implements IContentRegistry {
         objects.put(id, getRegister(Registries.CREATIVE_MODE_TAB).register(id.getPath(), tab));
     }
 
-    @Override
-    public <T extends ArmorMaterial> void registerArmorMaterial(Identifier id, Supplier<T> armorMaterial) {
-        objects.put(id, getRegister(Registries.ARMOR_MATERIAL).register(id.getPath(), armorMaterial));
-    }
 
     @Override
     public <T extends Fluid> void registerFluid(Identifier id, Supplier<T> fluid) {
@@ -149,15 +140,7 @@ public class NeoForgeContentRegistry implements IContentRegistry {
         objects.put(id, getRegister(Registries.RECIPE_TYPE).register(id.getPath(), type));
     }
 
-    @Override
-    public <T extends VillagerProfession> void registerVillagerProfession(Identifier id, Supplier<T> profession) {
-        objects.put(id, getRegister(Registries.VILLAGER_PROFESSION).register(id.getPath(), profession));
-    }
 
-    @Override
-    public <T extends GameRules.Value<T>> GameRules.Key<T> registerGameRule(String name, GameRules.Category category, GameRules.Type<T> type) {
-        return GameRules.register(name, category, type);
-    }
 
     @Override
     public <T extends EnchantmentEntityEffect> MapCodec<T> registerEnchantmentEntityEffect(Identifier id, MapCodec<T> codec) {
@@ -172,7 +155,7 @@ public class NeoForgeContentRegistry implements IContentRegistry {
     }
 
     @Override
-    public <T extends ValueEffect> MapCodec<T> registerEnchantmentValueEffect(Identifier id, MapCodec<T> codec) {
+    public <T extends EnchantmentValueEffect> MapCodec<T> registerEnchantmentValueEffect(Identifier id, MapCodec<T> codec) {
         objects.put(id, getRegister(Registries.ENCHANTMENT_VALUE_EFFECT_TYPE).register(id.getPath(), () -> codec));
         return codec;
     }
@@ -213,11 +196,6 @@ public class NeoForgeContentRegistry implements IContentRegistry {
         return (Holder<T>) objects.get(id);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T extends ArmorMaterial> Holder<T> getArmorMaterial(Identifier id) {
-        return (Holder<T>) objects.get(id);
-    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -279,9 +257,4 @@ public class NeoForgeContentRegistry implements IContentRegistry {
         return (Holder<T>) objects.get(id);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T extends VillagerProfession> Holder<T> getVillagerProfession(Identifier id) {
-        return (Holder<T>) objects.get(id);
-    }
 }

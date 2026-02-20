@@ -7,7 +7,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect;
-import net.minecraft.world.item.enchantment.effects.ValueEffect;
+import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 
 public class ModEnchantments {
 
@@ -24,7 +24,7 @@ public class ModEnchantments {
         return Services.REGISTRY.registerEnchantmentLocationEffect(Identifier.fromNamespaceAndPath(Constants.MOD_ID, name), codec);
     }
 
-    private static <T extends ValueEffect> MapCodec<T> registerValueEffect(String name, MapCodec<T> codec) {
+    private static <T extends EnchantmentValueEffect> MapCodec<T> registerValueEffect(String name, MapCodec<T> codec) {
         return Services.REGISTRY.registerEnchantmentValueEffect(Identifier.fromNamespaceAndPath(Constants.MOD_ID, name), codec);
     }
 
