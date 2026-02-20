@@ -2,6 +2,7 @@ package ${MAIN_CLASS.packageName}.platform;
 
 import ${MAIN_CLASS.packageName}.Constants;
 import ${MAIN_CLASS.packageName}.platform.services.IPlatformHelper;
+import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
 
 import java.util.ServiceLoader;
 

@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.core.RegistrySetBuilder;
 import org.jetbrains.annotations.Nullable;
 
-public class FabricDataGenerator implements DataGeneratorEntrypoint {
+public class DataGeneratorFabric implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {

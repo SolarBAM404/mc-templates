@@ -1,0 +1,26 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.resources.Identifier;
+
+import java.util.function.Supplier;
+
+public class ModParticles {
+
+    // Example Particle
+    // public static final Holder<SimpleParticleType> EXAMPLE_PARTICLE = register("example_particle", () -> new SimpleParticleType(false));
+
+    private static <T extends ParticleType<?>> Holder<T> register(String name, Supplier<T> particleType) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerParticle(id, particleType);
+        return Services.REGISTRY.getParticle(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Particles for " + Constants.MOD_NAME);
+    }
+}

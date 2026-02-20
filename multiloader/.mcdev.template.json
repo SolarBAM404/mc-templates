@@ -189,67 +189,149 @@
       "destination": "common/src/main/resources/pack.mcmeta"
     },
     {
-      "template": "common/registry/ModAttributes.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModAttributes.java"
+      "template": "common/registry/legacy/ModAttributes.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModAttributes.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModBlockEntities.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlockEntities.java"
+      "template": "common/registry/modern/ModAttributes.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModAttributes.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
-      "template": "common/registry/ModBlocks.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlocks.java"
+      "template": "common/registry/legacy/ModBlockEntities.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlockEntities.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModCreativeTabs.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModCreativeTabs.java"
+      "template": "common/registry/modern/ModBlockEntities.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlockEntities.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
-      "template": "common/registry/ModDataComponents.java.ft",
+      "template": "common/registry/legacy/ModBlocks.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlocks.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModBlocks.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlocks.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModCreativeTabs.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModCreativeTabs.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModCreativeTabs.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModCreativeTabs.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModDataComponents.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModDataComponents.java",
-      "condition": "${MC_VERSION} != '1.20.1'"
+      "condition": "${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModEffects.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEffects.java"
+      "template": "common/registry/modern/ModDataComponents.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModDataComponents.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
-      "template": "common/registry/1.20.1 ModEnchantments.java.ft",
+      "template": "common/registry/legacy/ModEffects.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEffects.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModEffects.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEffects.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/1.20.1 ModEnchantments.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEnchantments.java",
       "condition": "${MC_VERSION} == '1.20.1'"
     },
     {
-      "template": "common/registry/1.21+ ModEnchantments.java.ft",
+      "template": "common/registry/legacy/1.21+ ModEnchantments.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEnchantments.java",
-      "condition": "${MC_VERSION} != '1.20.1'"
+      "condition": "${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModEntities.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEntities.java"
+      "template": "common/registry/modern/ModEnchantments.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEnchantments.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
-      "template": "common/registry/ModItems.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModItems.java"
+      "template": "common/registry/legacy/ModEntities.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEntities.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModMenus.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModMenus.java"
+      "template": "common/registry/modern/ModEntities.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModEntities.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
-      "template": "common/registry/ModParticles.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModParticles.java"
+      "template": "common/registry/legacy/ModItems.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModItems.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModRecipes.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModRecipes.java"
+      "template": "common/registry/modern/ModItems.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModItems.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
-      "template": "common/registry/ModSoundEvents.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModSoundEvents.java"
+      "template": "common/registry/legacy/ModMenus.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModMenus.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
     },
     {
-      "template": "common/registry/ModTags.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModTags.java"
+      "template": "common/registry/modern/ModMenus.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModMenus.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModParticles.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModParticles.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModParticles.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModParticles.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModRecipes.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModRecipes.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModRecipes.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModRecipes.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModSoundEvents.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModSoundEvents.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModSoundEvents.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModSoundEvents.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModTags.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModTags.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModTags.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModTags.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "fabric/build.gradle.ft",
@@ -284,8 +366,8 @@
       "destination": "fabric/src/main/resources/fabric.mod.json"
     },
     {
-      "template": "fabric/FabricDataGenerator.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/FabricDataGenerator.java"
+      "template": "fabric/DataGeneratorFabric.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/DataGeneratorFabric.java"
     },
     {
       "template": "fabric/providers/ModModelProvider.java.ft",

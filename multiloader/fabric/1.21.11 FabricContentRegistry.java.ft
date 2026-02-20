@@ -7,7 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
@@ -44,87 +44,87 @@ public class FabricContentRegistry implements IContentRegistry {
     private final Map<ResourceLocation, Holder<?>> holders = new HashMap<>();
 
     @Override
-    public <T extends Block> void registerBlock(ResourceLocation id, Supplier<T> block) {
+    public <T extends Block> void registerBlock(Identifier id, Supplier<T> block) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.BLOCK, id, block.get()));
     }
 
     @Override
-    public <T extends Item> void registerItem(ResourceLocation id, Supplier<T> item) {
+    public <T extends Item> void registerItem(Identifier id, Supplier<T> item) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.ITEM, id, item.get()));
     }
 
     @Override
-    public <T extends MobEffect> void registerEffect(ResourceLocation id, Supplier<T> effect) {
+    public <T extends MobEffect> void registerEffect(Identifier id, Supplier<T> effect) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, id, effect.get()));
     }
 
     @Override
-    public <T extends Entity> void registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity) {
+    public <T extends Entity> void registerEntity(Identifier id, Supplier<EntityType<T>> entity) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.ENTITY_TYPE, id, entity.get()));
     }
 
     @Override
-    public <T extends CreativeModeTab> void registerCreativeTab(ResourceLocation id, Supplier<T> tab) {
+    public <T extends CreativeModeTab> void registerCreativeTab(Identifier id, Supplier<T> tab) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.CREATIVE_MODE_TAB, id, tab.get()));
     }
 
     @Override
-    public <T extends ArmorMaterial> void registerArmorMaterial(ResourceLocation id, Supplier<T> armorMaterial) {
+    public <T extends ArmorMaterial> void registerArmorMaterial(Identifier id, Supplier<T> armorMaterial) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, id, armorMaterial.get()));
     }
 
     @Override
-    public <T extends Fluid> void registerFluid(ResourceLocation id, Supplier<T> fluid) {
+    public <T extends Fluid> void registerFluid(Identifier id, Supplier<T> fluid) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.FLUID, id, fluid.get()));
     }
 
     @Override
-    public <T extends Potion> void registerPotion(ResourceLocation id, Supplier<T> potion) {
+    public <T extends Potion> void registerPotion(Identifier id, Supplier<T> potion) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.POTION, id, potion.get()));
     }
 
     @Override
-    public <T extends SoundEvent> void registerSound(ResourceLocation id, Supplier<T> sound) {
+    public <T extends SoundEvent> void registerSound(Identifier id, Supplier<T> sound) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, sound.get()));
     }
 
     @Override
-    public <T extends BlockEntityType<?>> void registerBlockEntity(ResourceLocation id, Supplier<T> block) {
+    public <T extends BlockEntityType<?>> void registerBlockEntity(Identifier id, Supplier<T> block) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, block.get()));
     }
 
     @Override
-    public <T> void registerDataComponent(ResourceLocation id, UnaryOperator<DataComponentType.Builder<T>> builder) {
+    public <T> void registerDataComponent(Identifier id, UnaryOperator<DataComponentType.Builder<T>> builder) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.DATA_COMPONENT_TYPE, id, builder.apply(DataComponentType.builder()).build()));
     }
 
     @Override
-    public <T extends Attribute> void registerAttribute(ResourceLocation id, Supplier<T> attribute) {
+    public <T extends Attribute> void registerAttribute(Identifier id, Supplier<T> attribute) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, id, attribute.get()));
     }
 
     @Override
-    public <T extends ParticleType<?>> void registerParticle(ResourceLocation id, Supplier<T> particle) {
+    public <T extends ParticleType<?>> void registerParticle(Identifier id, Supplier<T> particle) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.PARTICLE_TYPE, id, particle.get()));
     }
 
     @Override
-    public <T extends MenuType<?>> void registerMenu(ResourceLocation id, Supplier<T> menu) {
+    public <T extends MenuType<?>> void registerMenu(Identifier id, Supplier<T> menu) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.MENU, id, menu.get()));
     }
 
     @Override
-    public <T extends RecipeSerializer<?>> void registerRecipeSerializer(ResourceLocation id, Supplier<T> serializer) {
+    public <T extends RecipeSerializer<?>> void registerRecipeSerializer(Identifier id, Supplier<T> serializer) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.RECIPE_SERIALIZER, id, serializer.get()));
     }
 
     @Override
-    public <T extends RecipeType<?>> void registerRecipeType(ResourceLocation id, Supplier<T> type) {
+    public <T extends RecipeType<?>> void registerRecipeType(Identifier id, Supplier<T> type) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.RECIPE_TYPE, id, type.get()));
     }
 
     @Override
-    public <T extends VillagerProfession> void registerVillagerProfession(ResourceLocation id, Supplier<T> profession) {
+    public <T extends VillagerProfession> void registerVillagerProfession(Identifier id, Supplier<T> profession) {
         holders.put(id, Registry.registerForHolder(BuiltInRegistries.VILLAGER_PROFESSION, id, profession.get()));
     }
 
@@ -134,125 +134,125 @@ public class FabricContentRegistry implements IContentRegistry {
     }
 
     @Override
-    public <T extends EnchantmentEntityEffect> MapCodec<T> registerEnchantmentEntityEffect(ResourceLocation id, MapCodec<T> codec) {
+    public <T extends EnchantmentEntityEffect> MapCodec<T> registerEnchantmentEntityEffect(Identifier id, MapCodec<T> codec) {
         return Registry.register(BuiltInRegistries.ENCHANTMENT_ENTITY_EFFECT_TYPE, id, codec);
     }
 
     @Override
-    public <T extends EnchantmentLocationBasedEffect> MapCodec<T> registerEnchantmentLocationEffect(ResourceLocation id, MapCodec<T> codec) {
+    public <T extends EnchantmentLocationBasedEffect> MapCodec<T> registerEnchantmentLocationEffect(Identifier id, MapCodec<T> codec) {
         return Registry.register(BuiltInRegistries.ENCHANTMENT_LOCATION_BASED_EFFECT_TYPE, id, codec);
     }
 
     @Override
-    public <T extends ValueEffect> MapCodec<T> registerEnchantmentValueEffect(ResourceLocation id, MapCodec<T> codec) {
+    public <T extends ValueEffect> MapCodec<T> registerEnchantmentValueEffect(Identifier id, MapCodec<T> codec) {
         return Registry.register(BuiltInRegistries.ENCHANTMENT_VALUE_EFFECT_TYPE, id, codec);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Block> Holder<T> getBlock(ResourceLocation id) {
+    public <T extends Block> Holder<T> getBlock(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Item> Holder<T> getItem(ResourceLocation id) {
+    public <T extends Item> Holder<T> getItem(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Entity> Holder<EntityType<T>> getEntity(ResourceLocation id) {
+    public <T extends Entity> Holder<EntityType<T>> getEntity(Identifier id) {
         return (Holder<EntityType<T>>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends MobEffect> Holder<T> getEffect(ResourceLocation id) {
+    public <T extends MobEffect> Holder<T> getEffect(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends CreativeModeTab> Holder<T> getCreativeTab(ResourceLocation id) {
+    public <T extends CreativeModeTab> Holder<T> getCreativeTab(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Enchantment> Holder<T> getEnchantment(ResourceLocation id) {
+    public <T extends Enchantment> Holder<T> getEnchantment(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends ArmorMaterial> Holder<T> getArmorMaterial(ResourceLocation id) {
+    public <T extends ArmorMaterial> Holder<T> getArmorMaterial(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Fluid> Holder<T> getFluid(ResourceLocation id) {
+    public <T extends Fluid> Holder<T> getFluid(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Potion> Holder<T> getPotion(ResourceLocation id) {
+    public <T extends Potion> Holder<T> getPotion(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends SoundEvent> Holder<T> getSound(ResourceLocation id) {
+    public <T extends SoundEvent> Holder<T> getSound(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends BlockEntityType<?>> Holder<T> getBlockEntity(ResourceLocation id) {
+    public <T extends BlockEntityType<?>> Holder<T> getBlockEntity(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Holder<DataComponentType<T>> getDataComponent(ResourceLocation id) {
+    public <T> Holder<DataComponentType<T>> getDataComponent(Identifier id) {
         return (Holder<DataComponentType<T>>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Attribute> Holder<T> getAttribute(ResourceLocation id) {
+    public <T extends Attribute> Holder<T> getAttribute(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends ParticleType<?>> Holder<T> getParticle(ResourceLocation id) {
+    public <T extends ParticleType<?>> Holder<T> getParticle(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends MenuType<?>> Holder<T> getMenu(ResourceLocation id) {
+    public <T extends MenuType<?>> Holder<T> getMenu(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(ResourceLocation id) {
+    public <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends RecipeType<?>> Holder<T> getRecipeType(ResourceLocation id) {
+    public <T extends RecipeType<?>> Holder<T> getRecipeType(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends VillagerProfession> Holder<T> getVillagerProfession(ResourceLocation id) {
+    public <T extends VillagerProfession> Holder<T> getVillagerProfession(Identifier id) {
         return (Holder<T>) holders.get(id);
     }
 }

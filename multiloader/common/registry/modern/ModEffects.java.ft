@@ -1,0 +1,26 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+
+import java.util.function.Supplier;
+
+public class ModEffects {
+
+    // Example Effect
+    // public static final Holder<MobEffect> EXAMPLE_EFFECT = register("example_effect", () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xFFFFFF));
+
+    private static <T extends MobEffect> Holder<T> register(String name, Supplier<T> effect) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerEffect(id, effect);
+        return Services.REGISTRY.getEffect(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Effects for " + Constants.MOD_NAME);
+    }
+}

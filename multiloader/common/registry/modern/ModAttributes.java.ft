@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+
+import java.util.function.Supplier;
+
+public class ModAttributes {
+
+    // Example Attribute
+    // public static final Holder<Attribute> EXAMPLE_ATTRIBUTE = register("example_attribute", () -> new Attribute(...));
+
+    private static <T extends Attribute> Holder<T> register(String name, Supplier<T> attribute) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerAttribute(id, attribute);
+        return Services.REGISTRY.getAttribute(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Attributes for " + Constants.MOD_NAME);
+    }
+}

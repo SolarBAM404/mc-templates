@@ -19,7 +19,7 @@
             "${MAIN_CLASS}"
         ],
         "fabric-datagen": [
-            "${MAIN_CLASS.packageName}.datagen.FabricDataGenerator"
+            "${MAIN_CLASS.packageName}.datagen.DataGeneratorFabric"
         ]
     },
     "mixins": [

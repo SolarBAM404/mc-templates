@@ -1,0 +1,36 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+
+public class ModTags {
+
+    public static class Blocks {
+        // public static final TagKey<Block> EXAMPLE_BLOCK_TAG = tag("example_block_tag");
+
+        private static TagKey<Block> tag(String name) {
+            return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, name));
+        }
+    }
+
+    public static class Items {
+        // public static final TagKey<Item> EXAMPLE_ITEM_TAG = tag("example_item_tag");
+
+        private static TagKey<Item> tag(String name) {
+            return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, name));
+        }
+    }
+
+    public static class Entities {
+        // public static final TagKey<EntityType<?>> EXAMPLE_ENTITY_TAG = tag("example_entity_tag");
+
+        private static TagKey<EntityType<?>> tag(String name) {
+            return TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Constants.MOD_ID, name));
+        }
+    }
+}

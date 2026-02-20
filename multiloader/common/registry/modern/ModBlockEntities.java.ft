@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+
+import java.util.function.Supplier;
+
+public class ModBlockEntities {
+
+    // Example Block Entity
+    // public static final Holder<BlockEntityType<?>> EXAMPLE_BLOCK_ENTITY = register("example_block_entity", () -> BlockEntityType.Builder.of(...).build(null));
+
+    private static <T extends BlockEntityType<?>> Holder<T> register(String name, Supplier<T> blockEntityType) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerBlockEntity(id, blockEntityType);
+        return Services.REGISTRY.getBlockEntity(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Block Entities for " + Constants.MOD_NAME);
+    }
+}

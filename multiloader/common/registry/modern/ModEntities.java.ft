@@ -1,0 +1,26 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+
+import java.util.function.Supplier;
+
+public class ModEntities {
+
+    // Example Entity
+    // public static final Holder<EntityType<ExampleEntity>> EXAMPLE_ENTITY = register("example_entity", () -> EntityType.Builder.of(ExampleEntity::new, MobCategory.CREATURE).build("example_entity"));
+
+    private static <T extends net.minecraft.world.entity.Entity> Holder<EntityType<T>> register(String name, Supplier<EntityType<T>> entityType) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerEntity(id, entityType);
+        return Services.REGISTRY.getEntity(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Entities for " + Constants.MOD_NAME);
+    }
+}

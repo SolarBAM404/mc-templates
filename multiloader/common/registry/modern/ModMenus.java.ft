@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.inventory.MenuType;
+
+import java.util.function.Supplier;
+
+public class ModMenus {
+
+    // Example Menu
+    // public static final Holder<MenuType<ExampleMenu>> EXAMPLE_MENU = register("example_menu", () -> new MenuType<>(ExampleMenu::new, FeatureFlags.VANILLA_FEATURES));
+
+    private static <T extends MenuType<?>> Holder<T> register(String name, Supplier<T> menuType) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerMenu(id, menuType);
+        return Services.REGISTRY.getMenu(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Menus for " + Constants.MOD_NAME);
+    }
+}
