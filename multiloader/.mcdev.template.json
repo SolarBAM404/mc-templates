@@ -177,8 +177,14 @@
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/CommonClass.java"
     },
     {
-      "template": "common/Constants.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/Constants.java"
+      "template": "common/Legacy Constants.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/Constants.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/Modern Constants.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/Constants.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "common/mixins.json.ft",
