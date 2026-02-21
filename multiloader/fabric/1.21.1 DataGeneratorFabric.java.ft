@@ -3,8 +3,6 @@ package ${MAIN_CLASS.packageName}.datagen;
 import ${MAIN_CLASS.packageName}.datagen.providers.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.core.RegistrySetBuilder;
-import org.jetbrains.annotations.Nullable;
 
 public class DataGeneratorFabric implements DataGeneratorEntrypoint {
 
@@ -22,13 +20,6 @@ public class DataGeneratorFabric implements DataGeneratorEntrypoint {
         pack.addProvider((output, registries) -> new ModItemTagProvider(output, registries, blockTagProvider));
         
         // Dynamic Registry Provider (for 1.21+ data-driven features)
-        // pack.addProvider(ModDynamicRegistryProvider::new);
-    }
-
-    @Override
-    public @Nullable RegistrySetBuilder getRegistryBuilder() {
-        RegistrySetBuilder builder = new RegistrySetBuilder();
-        // Register dynamic registry data here (Enchantments, Damage Types, etc.)
-        return builder;
+        pack.addProvider(ModDynamicRegistryProvider::new);
     }
 }

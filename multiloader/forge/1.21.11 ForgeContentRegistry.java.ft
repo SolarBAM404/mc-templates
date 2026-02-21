@@ -2,6 +2,7 @@ package ${MAIN_CLASS.packageName}.platform;
 
 import com.mojang.serialization.MapCodec;
 import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.${MAIN_CLASS.className};
 import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -50,7 +51,7 @@ public class ForgeContentRegistry implements IContentRegistry {
     private <T> DeferredRegister<T> getRegister(ResourceKey<Registry<T>> key) {
         return (DeferredRegister<T>) registers.computeIfAbsent(key, k -> {
             DeferredRegister<T> register = DeferredRegister.create(key, Constants.MOD_ID);
-            register.register(${MAIN_CLASS.className}.getContext().getModEventBus());
+            register.register(${MAIN_CLASS.className}.getContext().getModBusGroup());
             return register;
         });
     }

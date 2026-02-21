@@ -366,8 +366,14 @@
       "destination": "fabric/src/main/resources/fabric.mod.json"
     },
     {
-      "template": "fabric/DataGeneratorFabric.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/DataGeneratorFabric.java"
+      "template": "fabric/1.20.1 DataGeneratorFabric.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/DataGeneratorFabric.java",
+      "condition": "${MC_VERSION} == '1.20.1'"
+    },
+    {
+      "template": "fabric/1.21.1 DataGeneratorFabric.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/DataGeneratorFabric.java",
+      "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
       "template": "fabric/providers/ModModelProvider.java.ft",
@@ -375,11 +381,23 @@
     },
     {
       "template": "fabric/providers/ModBlockTagProvider.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModBlockTagProvider.java"
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModBlockTagProvider.java",
+      "condition": "${MC_VERSION} != '1.21.11' && ${MC_VERSION} != '26.1'"
+    },
+    {
+      "template": "fabric/providers/1.21.11 ModBlockTagProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModBlockTagProvider.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "fabric/providers/ModItemTagProvider.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModItemTagProvider.java"
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModItemTagProvider.java",
+      "condition": "${MC_VERSION} != '1.21.11' && ${MC_VERSION} != '26.1'"
+    },
+    {
+      "template": "fabric/providers/1.21.11 ModItemTagProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModItemTagProvider.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "fabric/providers/ModLootTableProvider.java.ft",
@@ -387,11 +405,23 @@
     },
     {
       "template": "fabric/providers/ModRecipeProvider.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModRecipeProvider.java"
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModRecipeProvider.java",
+      "condition": "${MC_VERSION} != '1.21.11' && ${MC_VERSION} != '26.1'"
+    },
+    {
+      "template": "fabric/providers/1.21.11 ModRecipeProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModRecipeProvider.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "fabric/providers/ModLanguageProvider.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModLanguageProvider.java"
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModLanguageProvider.java",
+      "condition": "${MC_VERSION} != '1.21.11' && ${MC_VERSION} != '26.1'"
+    },
+    {
+      "template": "fabric/providers/1.21.11 ModLanguageProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModLanguageProvider.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "fabric/providers/ModAdvancementProvider.java.ft",

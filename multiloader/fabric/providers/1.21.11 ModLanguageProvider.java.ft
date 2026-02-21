@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModLanguageProvider extends FabricLanguageProvider {
     public ModLanguageProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, "en_us");
+        super(output, "en_us", registriesFuture);
     }
 
     @Override

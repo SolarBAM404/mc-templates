@@ -1,6 +1,7 @@
 package ${MAIN_CLASS.packageName}.platform;
 
 import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.${MAIN_CLASS.className};
 import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
