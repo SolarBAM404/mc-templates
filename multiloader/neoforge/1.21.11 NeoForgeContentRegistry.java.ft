@@ -3,6 +3,7 @@ package ${MAIN_CLASS.packageName}.platform;
 import com.mojang.serialization.MapCodec;
 import ${MAIN_CLASS.packageName}.Constants;
 import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
+import ${MAIN_CLASS.packageName}.registry.RegistryEntry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
 /**
  * NeoForge implementation of the {@link IContentRegistry} service.
  * Supports Minecraft 1.21.x (1.21.11 targeted) features.
@@ -44,7 +46,13 @@ public class NeoForgeContentRegistry implements IContentRegistry {
 
     private static IEventBus modBus;
     private final Map<ResourceKey<? extends Registry<?>>, DeferredRegister<?>> registers = new HashMap<>();
-    private final Map<Identifier, DeferredHolder<?, ?>> objects = new HashMap<>();
+    private final Map<Identifier, RegistryEntry<?>> entries = new HashMap<>();
+
+    @SuppressWarnings("unchecked")
+    private <T> Holder<T> getHolder(Identifier id) {
+        RegistryEntry<T> entry = (RegistryEntry<T>) entries.get(id);
+        return entry != null ? entry.getHolder() : null;
+    }
 
     /**
      * Sets the mod event bus for registrations.
@@ -65,197 +73,261 @@ public class NeoForgeContentRegistry implements IContentRegistry {
         });
     }
 
-    @Override
-    public <T extends Block> void registerBlock(Identifier id, Supplier<T> block) {
-        objects.put(id, getRegister(Registries.BLOCK).register(id.getPath(), block));
+    private <T> RegistryEntry<T> createEntry(Identifier id, Holder<T> holder) {
+        return new RegistryEntry<T>() {
+            @Override
+            public Identifier getId() {
+                return id;
+            }
+
+            @Override
+            public T get() {
+                return (T) holder.value();
+            }
+
+            @Override
+            public Holder<T> getHolder() {
+                return (Holder<T>) (Object) holder;
+            }
+        };
     }
 
     @Override
-    public <T extends Item> void registerItem(Identifier id, Supplier<T> item) {
-        objects.put(id, getRegister(Registries.ITEM).register(id.getPath(), item));
+    public <T extends Block> RegistryEntry<T> registerBlock(Identifier id, Supplier<T> block) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.BLOCK).register(id.getPath(), block);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends MobEffect> void registerEffect(Identifier id, Supplier<T> effect) {
-        objects.put(id, getRegister(Registries.MOB_EFFECT).register(id.getPath(), effect));
+    public <T extends Item> RegistryEntry<T> registerItem(Identifier id, Supplier<T> item) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.ITEM).register(id.getPath(), item);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends Entity> void registerEntity(Identifier id, Supplier<EntityType<T>> entity) {
-        objects.put(id, getRegister(Registries.ENTITY_TYPE).register(id.getPath(), entity));
+    public <T extends MobEffect> RegistryEntry<T> registerEffect(Identifier id, Supplier<T> effect) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.MOB_EFFECT).register(id.getPath(), effect);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends CreativeModeTab> void registerCreativeTab(Identifier id, Supplier<T> tab) {
-        objects.put(id, getRegister(Registries.CREATIVE_MODE_TAB).register(id.getPath(), tab));
+    public <T extends Entity> RegistryEntry<EntityType<T>> registerEntity(Identifier id, Supplier<EntityType<T>> entity) {
+        DeferredHolder<?, EntityType<T>> holder = (DeferredHolder<?, EntityType<T>>) (Object) getRegister(Registries.ENTITY_TYPE).register(id.getPath(), entity);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
+    }
+
+    @Override
+    public <T extends CreativeModeTab> RegistryEntry<T> registerCreativeTab(Identifier id, Supplier<T> tab) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.CREATIVE_MODE_TAB).register(id.getPath(), tab);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
 
     @Override
-    public <T extends Fluid> void registerFluid(Identifier id, Supplier<T> fluid) {
-        objects.put(id, getRegister(Registries.FLUID).register(id.getPath(), fluid));
+    public <T extends Fluid> RegistryEntry<T> registerFluid(Identifier id, Supplier<T> fluid) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.FLUID).register(id.getPath(), fluid);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends Potion> void registerPotion(Identifier id, Supplier<T> potion) {
-        objects.put(id, getRegister(Registries.POTION).register(id.getPath(), potion));
+    public <T extends Potion> RegistryEntry<T> registerPotion(Identifier id, Supplier<T> potion) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.POTION).register(id.getPath(), potion);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends SoundEvent> void registerSound(Identifier id, Supplier<T> sound) {
-        objects.put(id, getRegister(Registries.SOUND_EVENT).register(id.getPath(), sound));
+    public <T extends SoundEvent> RegistryEntry<T> registerSound(Identifier id, Supplier<T> sound) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.SOUND_EVENT).register(id.getPath(), sound);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends BlockEntityType<?>> void registerBlockEntity(Identifier id, Supplier<T> block) {
-        objects.put(id, getRegister(Registries.BLOCK_ENTITY_TYPE).register(id.getPath(), block));
+    public <T extends BlockEntityType<?>> RegistryEntry<T> registerBlockEntity(Identifier id, Supplier<T> block) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.BLOCK_ENTITY_TYPE).register(id.getPath(), block);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T> void registerDataComponent(Identifier id, UnaryOperator<DataComponentType.Builder<T>> builder) {
-        objects.put(id, getRegister(Registries.DATA_COMPONENT_TYPE).register(id.getPath(), () -> builder.apply(DataComponentType.builder()).build()));
+    public <T> RegistryEntry<DataComponentType<T>> registerDataComponent(Identifier id, UnaryOperator<DataComponentType.Builder<T>> builder) {
+        DeferredHolder<?, DataComponentType<T>> holder = (DeferredHolder<?, DataComponentType<T>>) (Object) getRegister(Registries.DATA_COMPONENT_TYPE).register(id.getPath(), () -> builder.apply(DataComponentType.builder()).build());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends Attribute> void registerAttribute(Identifier id, Supplier<T> attribute) {
-        objects.put(id, getRegister(Registries.ATTRIBUTE).register(id.getPath(), attribute));
+    public <T extends Attribute> RegistryEntry<T> registerAttribute(Identifier id, Supplier<T> attribute) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.ATTRIBUTE).register(id.getPath(), attribute);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends ParticleType<?>> void registerParticle(Identifier id, Supplier<T> particle) {
-        objects.put(id, getRegister(Registries.PARTICLE_TYPE).register(id.getPath(), particle));
+    public <T extends ParticleType<?>> RegistryEntry<T> registerParticle(Identifier id, Supplier<T> particle) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.PARTICLE_TYPE).register(id.getPath(), particle);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends MenuType<?>> void registerMenu(Identifier id, Supplier<T> menu) {
-        objects.put(id, getRegister(Registries.MENU).register(id.getPath(), menu));
+    public <T extends MenuType<?>> RegistryEntry<T> registerMenu(Identifier id, Supplier<T> menu) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.MENU).register(id.getPath(), menu);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends RecipeSerializer<?>> void registerRecipeSerializer(Identifier id, Supplier<T> serializer) {
-        objects.put(id, getRegister(Registries.RECIPE_SERIALIZER).register(id.getPath(), serializer));
+    public <T extends RecipeSerializer<?>> RegistryEntry<T> registerRecipeSerializer(Identifier id, Supplier<T> serializer) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.RECIPE_SERIALIZER).register(id.getPath(), serializer);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends RecipeType<?>> void registerRecipeType(Identifier id, Supplier<T> type) {
-        objects.put(id, getRegister(Registries.RECIPE_TYPE).register(id.getPath(), type));
+    public <T extends RecipeType<?>> RegistryEntry<T> registerRecipeType(Identifier id, Supplier<T> type) {
+        DeferredHolder<?, T> holder = (DeferredHolder<?, T>) (Object) getRegister(Registries.RECIPE_TYPE).register(id.getPath(), type);
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
 
 
     @Override
     public <T extends EnchantmentEntityEffect> MapCodec<T> registerEnchantmentEntityEffect(Identifier id, MapCodec<T> codec) {
-        objects.put(id, getRegister(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE).register(id.getPath(), () -> codec));
+        entries.put(id, (RegistryEntry<?>) (Object) getRegister(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE).register(id.getPath(), () -> codec));
         return codec;
     }
 
     @Override
     public <T extends EnchantmentLocationBasedEffect> MapCodec<T> registerEnchantmentLocationEffect(Identifier id, MapCodec<T> codec) {
-        objects.put(id, getRegister(Registries.ENCHANTMENT_LOCATION_BASED_EFFECT_TYPE).register(id.getPath(), () -> codec));
+        entries.put(id, (RegistryEntry<?>) (Object) getRegister(Registries.ENCHANTMENT_LOCATION_BASED_EFFECT_TYPE).register(id.getPath(), () -> codec));
         return codec;
     }
 
     @Override
     public <T extends EnchantmentValueEffect> MapCodec<T> registerEnchantmentValueEffect(Identifier id, MapCodec<T> codec) {
-        objects.put(id, getRegister(Registries.ENCHANTMENT_VALUE_EFFECT_TYPE).register(id.getPath(), () -> codec));
+        entries.put(id, (RegistryEntry<?>) (Object) getRegister(Registries.ENCHANTMENT_VALUE_EFFECT_TYPE).register(id.getPath(), () -> codec));
         return codec;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Block> Holder<T> getBlock(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Item> Holder<T> getItem(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Entity> Holder<EntityType<T>> getEntity(Identifier id) {
-        return (Holder<EntityType<T>>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends MobEffect> Holder<T> getEffect(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends CreativeModeTab> Holder<T> getCreativeTab(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Enchantment> Holder<T> getEnchantment(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Fluid> Holder<T> getFluid(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Potion> Holder<T> getPotion(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends SoundEvent> Holder<T> getSound(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends BlockEntityType<?>> Holder<T> getBlockEntity(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> Holder<DataComponentType<T>> getDataComponent(Identifier id) {
-        return (Holder<DataComponentType<T>>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Attribute> Holder<T> getAttribute(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends ParticleType<?>> Holder<T> getParticle(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends MenuType<?>> Holder<T> getMenu(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends RecipeType<?>> Holder<T> getRecipeType(Identifier id) {
-        return (Holder<T>) objects.get(id);
+        return getHolder(id);
     }
 
 }

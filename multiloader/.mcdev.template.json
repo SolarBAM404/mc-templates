@@ -177,6 +177,14 @@
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/CommonClass.java"
     },
     {
+      "template": "common/util/PlayerUtils.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/util/PlayerUtils.java"
+    },
+    {
+      "template": "common/util/ResourceUtils.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/util/ResourceUtils.java"
+    },
+    {
       "template": "common/Legacy Constants.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/Constants.java",
       "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"

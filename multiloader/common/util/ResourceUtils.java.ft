@@ -1,0 +1,20 @@
+package ${MAIN_CLASS.packageName}.util;
+
+import net.minecraft.resources.ResourceKey;
+
+public class ResourceUtils {
+
+    /**
+     * Converts a ResourceKey into a translation key-style string.
+     * Format: "<registry>.<namespace>.<id>"
+     *
+     * @param key The resource key to convert.
+     * @return The formatted string representation.
+     */
+    public static <T> String getResourceKeyString(ResourceKey<T> key) {
+        if (key == null) {
+            return "null";
+        }
+        return String.format("%s.%s.%s", key.registry().getPath(), key.location().getNamespace(), key.location().getPath());
+    }
+}

@@ -32,4 +32,31 @@ public interface IPlatformHelper {
     default String getEnvironmentName() {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    /**
+     * Checks if the current platform is Forge.
+     *
+     * @return True if the current platform is Forge, false otherwise.
+     */
+    default boolean isForge() {
+        return getPlatformName().equalsIgnoreCase("forge");
+    }
+
+    /**
+     * Checks if the current platform is Fabric.
+     *
+     * @return True if the current platform is Fabric, false otherwise.
+     */
+    default boolean isFabric() {
+        return getPlatformName().equalsIgnoreCase("fabric");
+    }
+
+    /**
+     * Checks if the current platform is NeoForge.
+     *
+     * @return True if the current platform is NeoForge, false otherwise.
+     */
+    default boolean isNeoForge() {
+        return getPlatformName().equalsIgnoreCase("neoforge");
+    }
 }

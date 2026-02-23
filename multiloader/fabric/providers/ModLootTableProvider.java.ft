@@ -16,7 +16,7 @@ public class ModLootTableProvider extends SimpleFabricLootTableProvider {
     }
 
     @Override
-    public void accept(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
         // biConsumer.accept(ModBlocks.EXAMPLE_BLOCK.get().getLootTable(), BlockLootSubProvider.createSelfDrop(ModBlocks.EXAMPLE_BLOCK.get()));
     }
 }

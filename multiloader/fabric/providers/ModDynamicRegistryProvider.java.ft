@@ -16,8 +16,9 @@ public class ModDynamicRegistryProvider extends FabricDynamicRegistryProvider {
         // entries.addAll(registries.getLookupOrThrow(Registries.ENCHANTMENT));
     }
 
+    
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Dynamic Registry Provider";
     }
 }

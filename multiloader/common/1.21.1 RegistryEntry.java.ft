@@ -1,0 +1,29 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.Supplier;
+
+/**
+ * A generic wrapper for registered objects across different modding platforms.
+ *
+ * @param <T> The type of the registered object.
+ */
+public interface RegistryEntry<T> extends Supplier<T> {
+
+    /**
+     * @return The identifier of the registered object.
+     */
+    ResourceLocation getId();
+
+    /**
+     * @return The registered object instance.
+     */
+    T get();
+
+    /**
+     * @return The holder for the registered object.
+     */
+    Holder<T> getHolder();
+}

@@ -2,6 +2,8 @@ package ${MAIN_CLASS.packageName}.platform.services;
 
 import java.util.function.Supplier;
 
+import ${MAIN_CLASS.packageName}.registry.RegistryEntry;
+
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -41,7 +43,7 @@ public interface IContentRegistry {
      * @param block A supplier providing the block instance.
      * @param <T>   The type of the block.
      */
-    <T extends Block> void registerBlock(ResourceLocation id, Supplier<T> block);
+    <T extends Block> RegistryEntry<T> registerBlock(ResourceLocation id, Supplier<T> block);
 
     /**
      * Registers an item and stores its holder.
@@ -50,7 +52,7 @@ public interface IContentRegistry {
      * @param item A supplier providing the item instance.
      * @param <T>  The type of the item.
      */
-    <T extends Item> void registerItem(ResourceLocation id, Supplier<T> item);
+    <T extends Item> RegistryEntry<T> registerItem(ResourceLocation id, Supplier<T> item);
 
     /**
      * Registers a mob effect and stores its holder.
@@ -59,7 +61,7 @@ public interface IContentRegistry {
      * @param effect A supplier providing the mob effect instance.
      * @param <T>    The type of the mob effect.
      */
-    <T extends MobEffect> void registerEffect(ResourceLocation id, Supplier<T> effect);
+    <T extends MobEffect> RegistryEntry<T> registerEffect(ResourceLocation id, Supplier<T> effect);
 
     /**
      * Registers an entity type and stores its holder.
@@ -68,7 +70,7 @@ public interface IContentRegistry {
      * @param entity A supplier providing the entity type instance.
      * @param <T>    The type of the entity.
      */
-    <T extends Entity> void registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity);
+    <T extends Entity> RegistryEntry<EntityType<T>> registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity);
 
     /**
      * Registers a creative mode tab and stores its holder.
@@ -77,7 +79,7 @@ public interface IContentRegistry {
      * @param tab A supplier providing the creative mode tab instance.
      * @param <T> The type of the creative mode tab.
      */
-    <T extends CreativeModeTab> void registerCreativeTab(ResourceLocation id, Supplier<T> tab);
+    <T extends CreativeModeTab> RegistryEntry<T> registerCreativeTab(ResourceLocation id, Supplier<T> tab);
 
     /**
      * Registers an armor material and stores its holder.
@@ -86,7 +88,7 @@ public interface IContentRegistry {
      * @param armorMaterial A supplier providing the armor material instance.
      * @param <T>           The type of the armor material.
      */
-    <T extends ArmorMaterial> void registerArmorMaterial(ResourceLocation id, Supplier<T> armorMaterial);
+    <T extends ArmorMaterial> RegistryEntry<T> registerArmorMaterial(ResourceLocation id, Supplier<T> armorMaterial);
 
     /**
      * Registers a fluid and stores its holder.
@@ -95,7 +97,7 @@ public interface IContentRegistry {
      * @param fluid A supplier providing the fluid instance.
      * @param <T>   The type of the fluid.
      */
-    <T extends Fluid> void registerFluid(ResourceLocation id, Supplier<T> fluid);
+    <T extends Fluid> RegistryEntry<T> registerFluid(ResourceLocation id, Supplier<T> fluid);
 
     /**
      * Registers a potion and stores its holder.
@@ -104,7 +106,7 @@ public interface IContentRegistry {
      * @param potion A supplier providing the potion instance.
      * @param <T>    The type of the potion.
      */
-    <T extends Potion> void registerPotion(ResourceLocation id, Supplier<T> potion);
+    <T extends Potion> RegistryEntry<T> registerPotion(ResourceLocation id, Supplier<T> potion);
 
     /**
      * Registers a sound event and stores its holder.
@@ -113,7 +115,7 @@ public interface IContentRegistry {
      * @param sound A supplier providing the sound event instance.
      * @param <T>   The type of the sound event.
      */
-    <T extends SoundEvent> void registerSound(ResourceLocation id, Supplier<T> sound);
+    <T extends SoundEvent> RegistryEntry<T> registerSound(ResourceLocation id, Supplier<T> sound);
 
     /**
      * Registers a block entity type and stores its holder.
@@ -122,7 +124,7 @@ public interface IContentRegistry {
      * @param block A supplier providing the block entity type instance.
      * @param <T>   The type of the block entity.
      */
-    <T extends BlockEntityType<?>> void registerBlockEntity(ResourceLocation id, Supplier<T> block);
+    <T extends BlockEntityType<?>> RegistryEntry<T> registerBlockEntity(ResourceLocation id, Supplier<T> block);
 
     /**
      * Registers an attribute and stores its holder.
@@ -131,7 +133,7 @@ public interface IContentRegistry {
      * @param attribute A supplier providing the attribute instance.
      * @param <T>       The type of the attribute.
      */
-    <T extends Attribute> void registerAttribute(ResourceLocation id, Supplier<T> attribute);
+    <T extends Attribute> RegistryEntry<T> registerAttribute(ResourceLocation id, Supplier<T> attribute);
 
     /**
      * Registers a menu type and stores its holder.
@@ -140,7 +142,7 @@ public interface IContentRegistry {
      * @param menu A supplier providing the menu type instance.
      * @param <T>  The type of the menu.
      */
-    <T extends MenuType<?>> void registerMenu(ResourceLocation id, Supplier<T> menu);
+    <T extends MenuType<?>> RegistryEntry<T> registerMenu(ResourceLocation id, Supplier<T> menu);
 
     /**
      * Registers a recipe serializer and stores its holder.
@@ -149,7 +151,7 @@ public interface IContentRegistry {
      * @param serializer A supplier providing the recipe serializer instance.
      * @param <T>        The type of the recipe serializer.
      */
-    <T extends RecipeSerializer<?>> void registerRecipeSerializer(ResourceLocation id, Supplier<T> serializer);
+    <T extends RecipeSerializer<?>> RegistryEntry<T> registerRecipeSerializer(ResourceLocation id, Supplier<T> serializer);
 
     /**
      * Registers a recipe type and stores its holder.
@@ -158,7 +160,7 @@ public interface IContentRegistry {
      * @param type A supplier providing the recipe type instance.
      * @param <T>  The type of the recipe.
      */
-    <T extends RecipeType<?>> void registerRecipeType(ResourceLocation id, Supplier<T> type);
+    <T extends RecipeType<?>> RegistryEntry<T> registerRecipeType(ResourceLocation id, Supplier<T> type);
 
     /**
      * Registers a villager profession and stores its holder.
@@ -167,7 +169,7 @@ public interface IContentRegistry {
      * @param profession A supplier providing the villager profession instance.
      * @param <T>        The type of the villager profession.
      */
-    <T extends VillagerProfession> void registerVillagerProfession(ResourceLocation id, Supplier<T> profession);
+    <T extends VillagerProfession> RegistryEntry<T> registerVillagerProfession(ResourceLocation id, Supplier<T> profession);
 
     /**
      * Registers a GameRule.
@@ -188,85 +190,85 @@ public interface IContentRegistry {
      * @param <T>         The type of the enchantment.
      * @return The registered enchantment holder.
      */
-    <T extends Enchantment> Holder<T> registerEnchantment(ResourceLocation id, Supplier<T> enchantment);
+    <T extends Enchantment> RegistryEntry<T> registerEnchantment(ResourceLocation id, Supplier<T> enchantment);
 
     /**
-     * Retrieves the holder for a registered block with a specific type.
+     * Retrieves the registry entry for a registered block with a specific type.
      */
     <T extends Block> Holder<T> getBlock(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered item with a specific type.
+     * Retrieves the registry entry for a registered item with a specific type.
      */
     <T extends Item> Holder<T> getItem(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered entity type with a specific type.
+     * Retrieves the registry entry for a registered entity type with a specific type.
      */
     <T extends Entity> Holder<EntityType<T>> getEntity(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered mob effect with a specific type.
+     * Retrieves the registry entry for a registered mob effect with a specific type.
      */
     <T extends MobEffect> Holder<T> getEffect(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered creative mode tab.
+     * Retrieves the registry entry for a registered creative mode tab.
      */
     <T extends CreativeModeTab> Holder<T> getCreativeTab(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered enchantment with a specific type.
+     * Retrieves the registry entry for a registered enchantment with a specific type.
      */
     <T extends Enchantment> Holder<T> getEnchantment(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered armor material with a specific type.
+     * Retrieves the registry entry for a registered armor material with a specific type.
      */
     <T extends ArmorMaterial> Holder<T> getArmorMaterial(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered fluid with a specific type.
+     * Retrieves the registry entry for a registered fluid with a specific type.
      */
     <T extends Fluid> Holder<T> getFluid(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered potion with a specific type.
+     * Retrieves the registry entry for a registered potion with a specific type.
      */
     <T extends Potion> Holder<T> getPotion(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered sound event with a specific type.
+     * Retrieves the registry entry for a registered sound event with a specific type.
      */
     <T extends SoundEvent> Holder<T> getSound(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered block entity type with a specific type.
+     * Retrieves the registry entry for a registered block entity type with a specific type.
      */
     <T extends BlockEntityType<?>> Holder<T> getBlockEntity(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered attribute with a specific type.
+     * Retrieves the registry entry for a registered attribute with a specific type.
      */
     <T extends Attribute> Holder<T> getAttribute(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered menu type with a specific type.
+     * Retrieves the registry entry for a registered menu type with a specific type.
      */
     <T extends MenuType<?>> Holder<T> getMenu(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered recipe serializer with a specific type.
+     * Retrieves the registry entry for a registered recipe serializer with a specific type.
      */
     <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered recipe type with a specific type.
+     * Retrieves the registry entry for a registered recipe type with a specific type.
      */
     <T extends RecipeType<?>> Holder<T> getRecipeType(ResourceLocation id);
 
     /**
-     * Retrieves the holder for a registered villager profession with a specific type.
+     * Retrieves the registry entry for a registered villager profession with a specific type.
      */
     <T extends VillagerProfession> Holder<T> getVillagerProfession(ResourceLocation id);
 }

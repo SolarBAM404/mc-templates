@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
 import ${MAIN_CLASS.packageName}.platform.services.IContentRegistry;
+import ${MAIN_CLASS.packageName}.registry.RegistryEntry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -39,82 +40,152 @@ import java.util.function.UnaryOperator;
  */
 public class FabricContentRegistry implements IContentRegistry {
 
-    private final Map<Identifier, Holder<?>> holders = new HashMap<>();
+    private final Map<Identifier, RegistryEntry<?>> entries = new HashMap<>();
 
-    @Override
-    public <T extends Block> void registerBlock(Identifier id, Supplier<T> block) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.BLOCK, id, block.get()));
+    @SuppressWarnings("unchecked")
+    private <T> Holder<T> getHolder(Identifier id) {
+        RegistryEntry<T> entry = (RegistryEntry<T>) entries.get(id);
+        return entry != null ? entry.getHolder() : null;
+    }
+
+    private <T> RegistryEntry<T> createEntry(Identifier id, Holder<T> holder) {
+        return new RegistryEntry<T>() {
+            @Override
+            public Identifier getId() {
+                return id;
+            }
+
+            @Override
+            public T get() {
+                return (T) holder.value();
+            }
+
+            @Override
+            public Holder<T> getHolder() {
+                return (Holder<T>) (Object) holder;
+            }
+        };
     }
 
     @Override
-    public <T extends Item> void registerItem(Identifier id, Supplier<T> item) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.ITEM, id, item.get()));
+    public <T extends Block> RegistryEntry<T> registerBlock(Identifier id, Supplier<T> block) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.BLOCK, id, block.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends MobEffect> void registerEffect(Identifier id, Supplier<T> effect) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, id, effect.get()));
+    public <T extends Item> RegistryEntry<T> registerItem(Identifier id, Supplier<T> item) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.ITEM, id, item.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends Entity> void registerEntity(Identifier id, Supplier<EntityType<T>> entity) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.ENTITY_TYPE, id, entity.get()));
+    public <T extends MobEffect> RegistryEntry<T> registerEffect(Identifier id, Supplier<T> effect) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, id, effect.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends CreativeModeTab> void registerCreativeTab(Identifier id, Supplier<T> tab) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.CREATIVE_MODE_TAB, id, tab.get()));
+    public <T extends Entity> RegistryEntry<EntityType<T>> registerEntity(Identifier id, Supplier<EntityType<T>> entity) {
+        Holder.Reference<EntityType<T>> holder = Registry.registerForHolder(BuiltInRegistries.ENTITY_TYPE, id, entity.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
+    }
+
+    @Override
+    public <T extends CreativeModeTab> RegistryEntry<T> registerCreativeTab(Identifier id, Supplier<T> tab) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.CREATIVE_MODE_TAB, id, tab.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
 
     @Override
-    public <T extends Fluid> void registerFluid(Identifier id, Supplier<T> fluid) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.FLUID, id, fluid.get()));
+    public <T extends Fluid> RegistryEntry<T> registerFluid(Identifier id, Supplier<T> fluid) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.FLUID, id, fluid.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends Potion> void registerPotion(Identifier id, Supplier<T> potion) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.POTION, id, potion.get()));
+    public <T extends Potion> RegistryEntry<T> registerPotion(Identifier id, Supplier<T> potion) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.POTION, id, potion.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends SoundEvent> void registerSound(Identifier id, Supplier<T> sound) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, sound.get()));
+    public <T extends SoundEvent> RegistryEntry<T> registerSound(Identifier id, Supplier<T> sound) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, sound.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends BlockEntityType<?>> void registerBlockEntity(Identifier id, Supplier<T> block) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, block.get()));
+    public <T extends BlockEntityType<?>> RegistryEntry<T> registerBlockEntity(Identifier id, Supplier<T> block) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, block.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T> void registerDataComponent(Identifier id, UnaryOperator<DataComponentType.Builder<T>> builder) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.DATA_COMPONENT_TYPE, id, builder.apply(DataComponentType.builder()).build()));
+    public <T> RegistryEntry<DataComponentType<T>> registerDataComponent(Identifier id, UnaryOperator<DataComponentType.Builder<T>> builder) {
+        Holder.Reference<DataComponentType<T>> holder = Registry.registerForHolder(BuiltInRegistries.DATA_COMPONENT_TYPE, id, builder.apply(DataComponentType.builder()).build());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends Attribute> void registerAttribute(Identifier id, Supplier<T> attribute) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, id, attribute.get()));
+    public <T extends Attribute> RegistryEntry<T> registerAttribute(Identifier id, Supplier<T> attribute) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, id, attribute.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends ParticleType<?>> void registerParticle(Identifier id, Supplier<T> particle) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.PARTICLE_TYPE, id, particle.get()));
+    public <T extends ParticleType<?>> RegistryEntry<T> registerParticle(Identifier id, Supplier<T> particle) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.PARTICLE_TYPE, id, particle.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends MenuType<?>> void registerMenu(Identifier id, Supplier<T> menu) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.MENU, id, menu.get()));
+    public <T extends MenuType<?>> RegistryEntry<T> registerMenu(Identifier id, Supplier<T> menu) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.MENU, id, menu.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends RecipeSerializer<?>> void registerRecipeSerializer(Identifier id, Supplier<T> serializer) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.RECIPE_SERIALIZER, id, serializer.get()));
+    public <T extends RecipeSerializer<?>> RegistryEntry<T> registerRecipeSerializer(Identifier id, Supplier<T> serializer) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.RECIPE_SERIALIZER, id, serializer.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
     @Override
-    public <T extends RecipeType<?>> void registerRecipeType(Identifier id, Supplier<T> type) {
-        holders.put(id, Registry.registerForHolder(BuiltInRegistries.RECIPE_TYPE, id, type.get()));
+    public <T extends RecipeType<?>> RegistryEntry<T> registerRecipeType(Identifier id, Supplier<T> type) {
+        Holder.Reference<T> holder = (Holder.Reference<T>) (Object) Registry.registerForHolder(BuiltInRegistries.RECIPE_TYPE, id, type.get());
+        RegistryEntry<T> entry = createEntry(id, holder);
+        entries.put(id, entry);
+        return entry;
     }
 
 
@@ -136,98 +207,98 @@ public class FabricContentRegistry implements IContentRegistry {
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Block> Holder<T> getBlock(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Item> Holder<T> getItem(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Entity> Holder<EntityType<T>> getEntity(Identifier id) {
-        return (Holder<EntityType<T>>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends MobEffect> Holder<T> getEffect(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends CreativeModeTab> Holder<T> getCreativeTab(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Enchantment> Holder<T> getEnchantment(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Fluid> Holder<T> getFluid(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Potion> Holder<T> getPotion(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends SoundEvent> Holder<T> getSound(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends BlockEntityType<?>> Holder<T> getBlockEntity(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> Holder<DataComponentType<T>> getDataComponent(Identifier id) {
-        return (Holder<DataComponentType<T>>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Attribute> Holder<T> getAttribute(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends ParticleType<?>> Holder<T> getParticle(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends MenuType<?>> Holder<T> getMenu(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends RecipeType<?>> Holder<T> getRecipeType(Identifier id) {
-        return (Holder<T>) holders.get(id);
+        return getHolder(id);
     }
 
 }

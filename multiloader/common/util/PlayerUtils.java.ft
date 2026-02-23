@@ -1,0 +1,64 @@
+package ${MAIN_CLASS.packageName}.util;
+
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+
+public class PlayerUtils {
+
+    /**
+     * Tries to give an ItemStack to a player. 
+     * If their inventory is full, it forcefully drops the item at their position.
+     *
+     * @param player The player receiving the item.
+     * @param stack The item stack to give. Cannot be null.
+     */
+    public static void giveItemToPlayer(Player player, @NotNull ItemStack stack) {
+        giveItemToPlayer(player, stack, -1);
+    }
+
+    /**
+     * Tries to give an ItemStack to a player, attempting a specific slot first.
+     * If the preferred slot is occupied or invalid, it falls back to the general inventory.
+     * If the inventory is completely full, it drops the item at the player's position.
+     *
+     * @param player The player receiving the item.
+     * @param stack The item stack to give. Cannot be null.
+     * @param preferredSlot The inventory slot index to try first (e.g., for equipment or hotbar).
+     *                      Passing -1 skips the preferred slot check.
+     */
+    public static void giveItemToPlayer(Player player, @NotNull ItemStack stack, int preferredSlot) {
+        if (stack.isEmpty())
+            return;
+
+        Inventory inventory = player.getInventory();
+        Level level = player.level();
+
+        // insert into preferred slot first if applicable
+        if (preferredSlot >= 0 && preferredSlot < inventory.getContainerSize()) {
+            inventory.add(preferredSlot, stack);
+        }
+
+        // try adding remaining stack into the inventory
+        if (!stack.isEmpty()) {
+            inventory.add(stack);
+        }
+
+        // If still not empty, drop it on the ground
+        if (!stack.isEmpty()) {
+            ItemEntity itemEntity = player.drop(stack, false);
+            if (itemEntity != null) {
+                // Ensure the dropped item is immediately accessible to the player
+                itemEntity.setNoPickUpDelay();
+                itemEntity.setTarget(player.getUUID());
+            }
+        } else {
+            // play sound if something got picked up successfully into inventory
+            level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(),
+                    SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F,
+                    ((level.random.nextFloat() - level.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+        }
+    }
+}
