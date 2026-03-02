@@ -1,0 +1,36 @@
+# Important Notes:
+# Every field you add must be added to the root build.gradle expandProps map.
+
+# Project
+version=${BUILD_COORDS.version}
+group=${BUILD_COORDS.groupId}
+java_version=21
+
+# Common
+minecraft_version=26.1-snapshot-10
+mod_name=${MOD_NAME}
+mod_author=${AUTHORS}
+mod_id=${MOD_ID}
+license=${LICENSE.id}
+credits=
+description=${DESCRIPTION}
+minecraft_version_range=[26.1-snapshot-10]
+## This is the version of minecraft that the 'common' project uses, you can find a list of all versions here
+## https://projects.neoforged.net/neoforged/neoform
+neo_form_version=null
+
+# Fabric
+fabric_version=0.143.7+26.1
+fabric_loader_version=0.18.4
+
+# Forge
+forge_version=null
+forge_loader_version_range=null
+
+# NeoForge
+neoforge_version=null
+neoforge_loader_version_range=null
+
+# Gradle
+org.gradle.jvmargs=-Xmx3G
+org.gradle.daemon=false

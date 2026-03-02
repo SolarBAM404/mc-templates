@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorMaterial;
+
+import java.util.function.Supplier;
+
+public class ModArmorMaterials {
+
+    // Example Armor Material
+    // public static final Holder<ArmorMaterial> EXAMPLE_ARMOR = register("example_armor", () -> new ArmorMaterial(...));
+
+    private static <T extends ArmorMaterial> Holder<T> register(String name, Supplier<T> armorMaterial) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerArmorMaterial(id, armorMaterial);
+        return Services.REGISTRY.getArmorMaterial(id);
+    }
+
+    public static void register() {
+        Constants.LOG.debug("Registering Armor Materials for " + Constants.MOD_NAME);
+    }
+}

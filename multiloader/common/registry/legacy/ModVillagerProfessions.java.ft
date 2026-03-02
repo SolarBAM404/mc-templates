@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.npc.VillagerProfession;
+
+import java.util.function.Supplier;
+
+public class ModVillagerProfessions {
+
+    // Example Villager Profession
+    // public static final Holder<VillagerProfession> EXAMPLE_PROFESSION = register("example_profession", () -> new VillagerProfession(...));
+
+    private static <T extends VillagerProfession> Holder<T> register(String name, Supplier<T> profession) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerVillagerProfession(id, profession);
+        return Services.REGISTRY.getVillagerProfession(id);
+    }
+
+    public static void register() {
+        Constants.LOG.debug("Registering Villager Professions for " + Constants.MOD_NAME);
+    }
+}

@@ -1,0 +1,20 @@
+package .registry;
+
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+
+import java.util.function.Supplier;
+
+/**
+ * A wrapper for a registered object, providing access to its ID, value, and holder.
+ *
+ * @param <T> The type of the registered object.
+ */
+public interface RegistryEntry<T> extends Supplier<T> {
+    Identifier getId();
+
+    @Override
+    T get();
+
+    Holder<T> getHolder();
+}

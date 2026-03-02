@@ -1,0 +1,357 @@
+package ${MAIN_CLASS.packageName}.platform.services;
+
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
+import net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect;
+import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluid;
+
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
+import ${MAIN_CLASS.packageName}.registry.RegistryEntry;
+
+/**
+ * Service interface for registering and retrieving game content across platforms.
+ * <p>
+ * This interface abstracts the platform-specific registration logic (e.g., Fabric vs. Forge/NeoForge),
+ * allowing common code to register blocks, items, entities, etc., in a unified way.
+ * Implementations should handle the underlying registry interactions and store references
+ * for later retrieval.
+ */
+public interface IContentRegistry {
+
+    /**
+     * Registers a block and stores its holder.
+     *
+     * @param id    The resource location identifier for the block.
+     * @param block A supplier providing the block instance.
+     * @param <T>   The type of the block.
+     */
+    <T extends Block> RegistryEntry<T> registerBlock(Identifier id, Supplier<T> block);
+
+    /**
+     * Registers an item and stores its holder.
+     *
+     * @param id   The resource location identifier for the item.
+     * @param item A supplier providing the item instance.
+     * @param <T>  The type of the item.
+     */
+    <T extends Item> RegistryEntry<T> registerItem(Identifier id, Supplier<T> item);
+
+    /**
+     * Registers a mob effect and stores its holder.
+     *
+     * @param id     The resource location identifier for the effect.
+     * @param effect A supplier providing the mob effect instance.
+     * @param <T>    The type of the mob effect.
+     */
+    <T extends MobEffect> RegistryEntry<T> registerEffect(Identifier id, Supplier<T> effect);
+
+    /**
+     * Registers an entity type and stores its holder.
+     *
+     * @param id     The resource location identifier for the entity type.
+     * @param entity A supplier providing the entity type instance.
+     * @param <T>    The type of the entity.
+     */
+    <T extends Entity> RegistryEntry<EntityType<T>> registerEntity(Identifier id, Supplier<EntityType<T>> entity);
+
+    /**
+     * Registers a creative mode tab and stores its holder.
+     *
+     * @param id  The resource location identifier for the creative tab.
+     * @param tab A supplier providing the creative mode tab instance.
+     * @param <T> The type of the creative mode tab.
+     */
+    <T extends CreativeModeTab> RegistryEntry<T> registerCreativeTab(Identifier id, Supplier<T> tab);
+
+
+    /**
+     * Registers a fluid and stores its holder.
+     *
+     * @param id    The resource location identifier for the fluid.
+     * @param fluid A supplier providing the fluid instance.
+     * @param <T>   The type of the fluid.
+     */
+    <T extends Fluid> RegistryEntry<T> registerFluid(Identifier id, Supplier<T> fluid);
+
+    /**
+     * Registers a potion and stores its holder.
+     *
+     * @param id     The resource location identifier for the potion.
+     * @param potion A supplier providing the potion instance.
+     * @param <T>    The type of the potion.
+     */
+    <T extends Potion> RegistryEntry<T> registerPotion(Identifier id, Supplier<T> potion);
+
+    /**
+     * Registers a sound event and stores its holder.
+     *
+     * @param id    The resource location identifier for the sound event.
+     * @param sound A supplier providing the sound event instance.
+     * @param <T>   The type of the sound event.
+     */
+    <T extends SoundEvent> RegistryEntry<T> registerSound(Identifier id, Supplier<T> sound);
+
+    /**
+     * Registers a block entity type and stores its holder.
+     *
+     * @param id    The resource location identifier for the block entity type.
+     * @param block A supplier providing the block entity type instance.
+     * @param <T>   The type of the block entity.
+     */
+    <T extends BlockEntityType<?>> RegistryEntry<T> registerBlockEntity(Identifier id, Supplier<T> block);
+
+    /**
+     * Registers a data component type and stores its holder.
+     *
+     * @param id      The resource location identifier for the data component type.
+     * @param builder A function to configure the data component type builder.
+     * @param <T>     The type of the data component.
+     */
+    <T> RegistryEntry<DataComponentType<T>> registerDataComponent(Identifier id, UnaryOperator<DataComponentType.Builder<T>> builder);
+
+    /**
+     * Registers an attribute and stores its holder.
+     *
+     * @param id        The resource location identifier for the attribute.
+     * @param attribute A supplier providing the attribute instance.
+     * @param <T>       The type of the attribute.
+     */
+    <T extends Attribute> RegistryEntry<T> registerAttribute(Identifier id, Supplier<T> attribute);
+
+    /**
+     * Registers a particle type and stores its holder.
+     *
+     * @param id       The resource location identifier for the particle type.
+     * @param particle A supplier providing the particle type instance.
+     * @param <T>      The type of the particle.
+     */
+    <T extends ParticleType<?>> RegistryEntry<T> registerParticle(Identifier id, Supplier<T> particle);
+
+    /**
+     * Registers a menu type and stores its holder.
+     *
+     * @param id   The resource location identifier for the menu type.
+     * @param menu A supplier providing the menu type instance.
+     * @param <T>  The type of the menu.
+     */
+    <T extends MenuType<?>> RegistryEntry<T> registerMenu(Identifier id, Supplier<T> menu);
+
+    /**
+     * Registers a recipe serializer and stores its holder.
+     *
+     * @param id         The resource location identifier for the recipe serializer.
+     * @param serializer A supplier providing the recipe serializer instance.
+     * @param <T>        The type of the recipe serializer.
+     */
+    <T extends RecipeSerializer<?>> RegistryEntry<T> registerRecipeSerializer(Identifier id, Supplier<T> serializer);
+
+    /**
+     * Registers a recipe type and stores its holder.
+     *
+     * @param id   The resource location identifier for the recipe type.
+     * @param type A supplier providing the recipe type instance.
+     * @param <T>  The type of the recipe.
+     */
+    <T extends RecipeType<?>> RegistryEntry<T> registerRecipeType(Identifier id, Supplier<T> type);
+
+
+
+    /**
+     * Registers an Enchantment Entity Effect codec.
+     *
+     * @param id    The identifier for the effect.
+     * @param codec The codec for the effect.
+     * @param <T>   The type of the effect.
+     * @return The registered codec.
+     */
+    <T extends EnchantmentEntityEffect> MapCodec<T> registerEnchantmentEntityEffect(Identifier id, MapCodec<T> codec);
+
+    /**
+     * Registers an Enchantment Location Based Effect codec.
+     *
+     * @param id    The identifier for the effect.
+     * @param codec The codec for the effect.
+     * @param <T>   The type of the effect.
+     * @return The registered codec.
+     */
+    <T extends EnchantmentLocationBasedEffect> MapCodec<T> registerEnchantmentLocationEffect(Identifier id, MapCodec<T> codec);
+
+    /**
+     * Registers an Enchantment Value Effect codec (EnchantmentValueEffect).
+     *
+     * @param id    The identifier for the effect.
+     * @param codec The codec for the effect.
+     * @param <T>   The type of the effect.
+     * @return The registered codec.
+     */
+    <T extends EnchantmentValueEffect> MapCodec<T> registerEnchantmentValueEffect(Identifier id, MapCodec<T> codec);
+
+    /**
+     * Retrieves the registry entry for a registered block with a specific type.
+     *
+     * @param id  The resource location identifier of the block.
+     * @param <T> The type of the block.
+     * @return The registry entry for the block, or null if not found.
+     */
+    <T extends Block> Holder<T> getBlock(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered item with a specific type.
+     *
+     * @param id  The resource location identifier of the item.
+     * @param <T> The type of the item.
+     * @return The registry entry for the item, or null if not found.
+     */
+    <T extends Item> Holder<T> getItem(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered entity type with a specific type.
+     *
+     * @param id  The resource location identifier of the entity type.
+     * @param <T> The type of the entity.
+     * @return The registry entry for the entity type, or null if not found.
+     */
+    <T extends Entity> Holder<EntityType<T>> getEntity(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered mob effect with a specific type.
+     *
+     * @param id  The resource location identifier of the mob effect.
+     * @param <T> The type of the mob effect.
+     * @return The registry entry for the mob effect, or null if not found.
+     */
+    <T extends MobEffect> Holder<T> getEffect(Identifier id);
+
+
+    /**
+     * Retrieves the registry entry for a registered creative mode tab with a specific type.
+     *
+     * @param id  The resource location identifier of the creative tab.
+     * @param <T> The type of the creative mode tab.
+     * @return The registry entry for the creative mode tab, or null if not found.
+     */
+    <T extends CreativeModeTab> Holder<T> getCreativeTab(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered enchantment with a specific type.
+     *
+     * @param id  The resource location identifier of the enchantment.
+     * @param <T> The type of the enchantment.
+     * @return The registry entry for the enchantment, or null if not found.
+     */
+    <T extends Enchantment> Holder<T> getEnchantment(Identifier id);
+
+
+
+    /**
+     * Retrieves the registry entry for a registered fluid with a specific type.
+     *
+     * @param id  The resource location identifier of the fluid.
+     * @param <T> The type of the fluid.
+     * @return The registry entry for the fluid, or null if not found.
+     */
+    <T extends Fluid> Holder<T> getFluid(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered potion with a specific type.
+     *
+     * @param id  The resource location identifier of the potion.
+     * @param <T> The type of the potion.
+     * @return The registry entry for the potion, or null if not found.
+     */
+    <T extends Potion> Holder<T> getPotion(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered sound event with a specific type.
+     *
+     * @param id  The resource location identifier of the sound event.
+     * @param <T> The type of the sound event.
+     * @return The registry entry for the sound event, or null if not found.
+     */
+    <T extends SoundEvent> Holder<T> getSound(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered block entity type with a specific type.
+     *
+     * @param id  The resource location identifier of the block entity type.
+     * @param <T> The type of the block entity.
+     * @return The registry entry for the block entity type, or null if not found.
+     */
+    <T extends BlockEntityType<?>> Holder<T> getBlockEntity(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered data component type with a specific type.
+     *
+     * @param id  The resource location identifier of the data component type.
+     * @param <T> The type of the data component.
+     * @return The registry entry for the data component type, or null if not found.
+     */
+    <T> Holder<DataComponentType<T>> getDataComponent(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered attribute with a specific type.
+     *
+     * @param id  The resource location identifier of the attribute.
+     * @param <T> The type of the attribute.
+     * @return The registry entry for the attribute, or null if not found.
+     */
+    <T extends Attribute> Holder<T> getAttribute(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered particle type with a specific type.
+     *
+     * @param id  The resource location identifier of the particle type.
+     * @param <T> The type of the particle.
+     * @return The registry entry for the particle type, or null if not found.
+     */
+    <T extends ParticleType<?>> Holder<T> getParticle(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered menu type with a specific type.
+     *
+     * @param id  The resource location identifier of the menu type.
+     * @param <T> The type of the menu.
+     * @return The registry entry for the menu type, or null if not found.
+     */
+    <T extends MenuType<?>> Holder<T> getMenu(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered recipe serializer with a specific type.
+     *
+     * @param id  The resource location identifier of the recipe serializer.
+     * @param <T> The type of the recipe serializer.
+     * @return The registry entry for the recipe serializer, or null if not found.
+     */
+    <T extends RecipeSerializer<?>> Holder<T> getRecipeSerializer(Identifier id);
+
+    /**
+     * Retrieves the registry entry for a registered recipe type with a specific type.
+     *
+     * @param id  The resource location identifier of the recipe type.
+     * @param <T> The type of the recipe.
+     * @return The registry entry for the recipe type, or null if not found.
+     */
+    <T extends RecipeType<?>> Holder<T> getRecipeType(Identifier id);
+
+}

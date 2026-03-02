@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.material.Fluid;
+
+import java.util.function.Supplier;
+
+public class ModFluids {
+
+    // Example Fluid
+    // public static final Holder<Fluid> EXAMPLE_FLUID = register("example_fluid", () -> new MyFluid());
+
+    private static <T extends Fluid> Holder<T> register(String name, Supplier<T> fluid) {
+        Identifier id = Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerFluid(id, fluid);
+        return Services.REGISTRY.getFluid(id);
+    }
+
+    public static void register() {
+         Constants.LOG.debug("Registering Fluids for " + Constants.MOD_NAME);
+    }
+}

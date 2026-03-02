@@ -213,6 +213,16 @@
       "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
+      "template": "common/registry/legacy/ModArmorMaterials.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModArmorMaterials.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModArmorMaterials.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModArmorMaterials.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "common/registry/legacy/ModBlockEntities.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModBlockEntities.java",
       "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
@@ -288,6 +298,16 @@
       "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
+      "template": "common/registry/legacy/ModFluids.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModFluids.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModFluids.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModFluids.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "common/registry/legacy/ModItems.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModItems.java",
       "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
@@ -318,6 +338,16 @@
       "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
+      "template": "common/registry/legacy/ModPotions.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModPotions.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModPotions.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModPotions.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "common/registry/legacy/ModRecipes.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModRecipes.java",
       "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
@@ -345,6 +375,16 @@
     {
       "template": "common/registry/modern/ModTags.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModTags.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
+    },
+    {
+      "template": "common/registry/legacy/ModVillagerProfessions.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModVillagerProfessions.java",
+      "condition": "${MC_VERSION} == '1.20.1' || ${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "common/registry/modern/ModVillagerProfessions.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/ModVillagerProfessions.java",
       "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {

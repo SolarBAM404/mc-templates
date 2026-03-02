@@ -1,0 +1,13 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+
+public class ModVillagerProfessions {
+
+    // Note: VillagerProfession registry is not available in Minecraft 1.21.11+
+    // Villager professions are now defined differently in modern versions
+
+    public static void register() {
+        Constants.LOG.debug("Villager Professions registry not applicable for " + Constants.MOD_NAME);
+    }
+}

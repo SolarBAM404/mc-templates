@@ -20,6 +20,8 @@ public class CommonClass {
         // Initialize registries
         ModBlocks.register();
         ModItems.register();
+        ModFluids.register();
+        ModPotions.register();
         ModEffects.register();
         ModEntities.register();
         ModBlockEntities.register();
@@ -29,7 +31,9 @@ public class CommonClass {
         ModMenus.register();
         ModRecipes.register();
         ModAttributes.register();
+        ModArmorMaterials.register();
         ModEnchantments.register();
         ModCreativeTabs.register();
+        ModVillagerProfessions.register();
     }
 }

@@ -1,0 +1,25 @@
+package ${MAIN_CLASS.packageName}.registry;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.alchemy.Potion;
+
+import java.util.function.Supplier;
+
+public class ModPotions {
+
+    // Example Potion
+    // public static final Holder<Potion> EXAMPLE_POTION = register("example_potion", () -> new Potion(new MobEffectInstance(MobEffects.REGENERATION, 200)));
+
+    private static <T extends Potion> Holder<T> register(String name, Supplier<T> potion) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+        Services.REGISTRY.registerPotion(id, potion);
+        return Services.REGISTRY.getPotion(id);
+    }
+
+    public static void register() {
+        Constants.LOG.debug("Registering Potions for " + Constants.MOD_NAME);
+    }
+}
