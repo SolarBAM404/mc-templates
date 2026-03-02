@@ -138,9 +138,14 @@
       "condition": "${MC_VERSION} == '1.20.1'"
     },
     {
+      "template": "buildSrc/26.1 multiloader-common.gradle.ft",
+      "destination": "buildSrc/src/main/groovy/multiloader-common.gradle",
+      "condition": "${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "buildSrc/1.21+ multiloader-common.gradle.ft",
       "destination": "buildSrc/src/main/groovy/multiloader-common.gradle",
-      "condition": "${MC_VERSION} != '1.20.1'"
+      "condition": "${MC_VERSION} != '1.20.1' && ${MC_VERSION} != '26.1'"
     },
     {
       "template": "buildSrc/multiloader-loader.gradle.ft",
@@ -167,6 +172,10 @@
     {
       "template": "common/${MC_VERSION} IContentRegistry.java.ft",
       "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/platform/services/IContentRegistry.java"
+    },
+    {
+      "template": "common/${MC_VERSION} RegistryEntry.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.packagePath}/registry/RegistryEntry.java"
     },
     {
       "template": "common/Services.java.ft",
@@ -388,8 +397,14 @@
       "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
+      "template": "fabric/26.1 build.gradle.ft",
+      "destination": "fabric/build.gradle",
+      "condition": "${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "fabric/build.gradle.ft",
-      "destination": "fabric/build.gradle"
+      "destination": "fabric/build.gradle",
+      "condition": "${MC_VERSION} != '26.1'"
     },
     {
       "template": "fabric/ExampleMod.java.ft",
@@ -427,7 +442,12 @@
     {
       "template": "fabric/1.21.1 DataGeneratorFabric.java.ft",
       "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/DataGeneratorFabric.java",
-      "condition": "${MC_VERSION} != '1.20.1'"
+      "condition": "${MC_VERSION} == '1.21.1'"
+    },
+    {
+      "template": "fabric/${MC_VERSION} DataGeneratorFabric.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/DataGeneratorFabric.java",
+      "condition": "${MC_VERSION} == '1.21.11' || ${MC_VERSION} == '26.1'"
     },
     {
       "template": "fabric/providers/ModModelProvider.java.ft",
@@ -487,8 +507,14 @@
       "condition": "${MC_VERSION} != '1.20.1'"
     },
     {
+      "template": "forge/26.1 build.gradle.ft",
+      "destination": "forge/build.gradle",
+      "condition": "${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "forge/build.gradle.ft",
-      "destination": "forge/build.gradle"
+      "destination": "forge/build.gradle",
+      "condition": "${MC_VERSION} != '26.1'"
     },
     {
       "template": "forge/ExampleMod.java.ft",
@@ -519,9 +545,14 @@
       "destination": "forge/src/main/resources/META-INF/mods.toml"
     },
     {
+      "template": "neoforge/26.1 build.gradle.ft",
+      "destination": "neoforge/build.gradle",
+      "condition": "${MC_VERSION} == '26.1'"
+    },
+    {
       "template": "neoforge/build.gradle.ft",
       "destination": "neoforge/build.gradle",
-      "condition": "${MC_VERSION} != '1.20.1'"
+      "condition": "${MC_VERSION} != '1.20.1' && ${MC_VERSION} != '26.1'"
     },
     {
       "template": "neoforge/ExampleMod.java.ft",
