@@ -30,6 +30,7 @@ import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
+import net.pixelforge.untamed_fauna.registry.RegistryEntry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,8 +95,8 @@ public class FabricContentRegistry implements IContentRegistry {
 
     @Override
     public <T extends Entity> RegistryEntry<EntityType<?>> registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity) {
-        Holder.Reference<EntityType<T>> holder = Registry.registerForHolder(BuiltInRegistries.ENTITY_TYPE, id, entity.get());
-        RegistryEntry<T> entry = createEntry(id, holder);
+        Holder.Reference<EntityType<?>> holder = Registry.registerForHolder(BuiltInRegistries.ENTITY_TYPE, id, entity.get());
+        RegistryEntry<EntityType<?>> entry = createEntry(id, holder);
         entries.put(id, entry);
         return entry;
     }
@@ -149,9 +150,9 @@ public class FabricContentRegistry implements IContentRegistry {
     }
 
     @Override
-    public <T> RegistryEntry<DataComponentType<T>> registerDataComponent(ResourceLocation id, UnaryOperator<DataComponentType.Builder<T>> builder) {
-        Holder.Reference<DataComponentType<T>> holder = Registry.registerForHolder(BuiltInRegistries.DATA_COMPONENT_TYPE, id, builder.apply(DataComponentType.builder()).build());
-        RegistryEntry<T> entry = createEntry(id, holder);
+    public <T> RegistryEntry<DataComponentType<?>> registerDataComponent(ResourceLocation id, UnaryOperator<DataComponentType.Builder<T>> builder) {
+        Holder.Reference<DataComponentType<?>> holder = Registry.registerForHolder(BuiltInRegistries.DATA_COMPONENT_TYPE, id, builder.apply(DataComponentType.builder()).build());
+        RegistryEntry<DataComponentType<?>> entry = createEntry(id, holder);
         entries.put(id, entry);
         return entry;
     }

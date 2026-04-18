@@ -73,7 +73,7 @@ public interface IContentRegistry {
      * @param entity A supplier providing the entity type instance.
      * @param <T>    The type of the entity.
      */
-    <T extends Entity> RegistryEntry<EntityType<T>> registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity);
+    <T extends Entity> RegistryEntry<EntityType<?>> registerEntity(ResourceLocation id, Supplier<EntityType<T>> entity);
 
     /**
      * Registers a creative mode tab and stores its holder.
@@ -137,7 +137,7 @@ public interface IContentRegistry {
      * @param builder A function to configure the data component type builder.
      * @param <T>     The type of the data component.
      */
-    <T> RegistryEntry<DataComponentType<T>> registerDataComponent(ResourceLocation id, UnaryOperator<DataComponentType.Builder<T>> builder);
+    <T> RegistryEntry<DataComponentType<?>> registerDataComponent(ResourceLocation id, UnaryOperator<DataComponentType.Builder<T>> builder);
 
     /**
      * Registers an attribute and stores its holder.
