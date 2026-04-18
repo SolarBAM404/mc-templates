@@ -1,0 +1,13 @@
+dependencies {
+	if (use_adventure.toBoolean()) {
+		compileOnly "net.kyori:adventure-api:${adventure_version}"
+		compileOnly "net.kyori:adventure-text-minimessage:${adventure_version}"
+	}
+
+	if (use_configurate.toBoolean()) {
+		api "org.spongepowered:configurate-core:${configurate_version}"
+		implementation "org.spongepowered:configurate-yaml:${configurate_version}"
+	}
+
+	testImplementation "org.junit.jupiter:junit-jupiter:${junit_version}"
+}

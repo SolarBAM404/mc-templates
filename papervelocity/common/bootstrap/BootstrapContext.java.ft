@@ -1,0 +1,30 @@
+package ${MAIN_CLASS.packageName}.bootstrap;
+
+import ${MAIN_CLASS.packageName}.command.CommandRegistry;
+import ${MAIN_CLASS.packageName}.config.PluginConfig;
+import ${MAIN_CLASS.packageName}.text.Localization;
+
+public final class BootstrapContext {
+
+    private final PluginConfig config;
+    private final Localization localization;
+    private final CommandRegistry commandRegistry;
+
+    public BootstrapContext(PluginConfig config, Localization localization, CommandRegistry commandRegistry) {
+        this.config = config;
+        this.localization = localization;
+        this.commandRegistry = commandRegistry;
+    }
+
+    public PluginConfig getConfig() {
+        return config;
+    }
+
+    public Localization getLocalization() {
+        return localization;
+    }
+
+    public CommandRegistry getCommandRegistry() {
+        return commandRegistry;
+    }
+}

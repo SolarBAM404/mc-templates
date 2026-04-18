@@ -1,0 +1,11 @@
+package ${MAIN_CLASS.packageName}
+
+import java.util.logging.Logger
+
+object Constants {
+    const val MOD_ID: String = "${MOD_ID}"
+    const val MOD_NAME: String = "${MOD_NAME}"
+    const val MINECRAFT_VERSION: String = "${MINECRAFT_VERSION}"
+    const val BSTATS_PLUGIN_ID: Int = ${BSTATS_PLUGIN_ID}
+    val LOG: Logger = Logger.getLogger(MOD_ID)
+}

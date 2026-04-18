@@ -1,0 +1,15 @@
+package ${MAIN_CLASS.packageName};
+
+import ${MAIN_CLASS.packageName}.platform.Services;
+import ${MAIN_CLASS.packageName}.text.MiniMessageSupport;
+
+public final class CommonClass {
+
+    private CommonClass() {
+    }
+
+    public static void init() {
+        Constants.LOG.info("Loaded " + Constants.MOD_NAME + " on " + Services.PLATFORM.getPlatformName());
+        Constants.LOG.info("MiniMessage available: " + MiniMessageSupport.isAvailable());
+    }
+}

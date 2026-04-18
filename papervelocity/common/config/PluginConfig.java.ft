@@ -1,0 +1,34 @@
+package ${MAIN_CLASS.packageName}.config;
+
+public final class PluginConfig {
+
+    public static final int LATEST_VERSION = 2;
+
+    private int configVersion = LATEST_VERSION;
+    private boolean metricsEnabled;
+    private String locale = "en_US";
+
+    public int getConfigVersion() {
+        return configVersion;
+    }
+
+    public void setConfigVersion(int configVersion) {
+        this.configVersion = configVersion;
+    }
+
+    public boolean isMetricsEnabled() {
+        return metricsEnabled;
+    }
+
+    public void setMetricsEnabled(boolean metricsEnabled) {
+        this.metricsEnabled = metricsEnabled;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+}

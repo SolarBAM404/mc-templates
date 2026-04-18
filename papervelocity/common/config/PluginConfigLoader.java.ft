@@ -1,0 +1,73 @@
+package ${MAIN_CLASS.packageName}.config;
+
+import ${MAIN_CLASS.packageName}.Constants;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Properties;
+
+public final class PluginConfigLoader {
+
+    private static final String FILE_NAME = "config.properties";
+
+    private PluginConfigLoader() {
+    }
+
+    public static PluginConfig load(Path dataDirectory) {
+        PluginConfig config = new PluginConfig();
+        Path configFile = dataDirectory.resolve(FILE_NAME);
+
+        try {
+            Files.createDirectories(dataDirectory);
+
+            if (Files.exists(configFile)) {
+                Properties properties = new Properties();
+                try (InputStream input = Files.newInputStream(configFile)) {
+                    properties.load(input);
+                }
+
+                int currentVersion = Integer.parseInt(properties.getProperty("config.version", "1"));
+                config.setConfigVersion(currentVersion);
+                config.setMetricsEnabled(Boolean.parseBoolean(properties.getProperty("metrics.enabled", "false")));
+                config.setLocale(properties.getProperty("locale", "en_US"));
+
+                migrateIfNeeded(config, properties);
+            }
+
+            save(configFile, config);
+        } catch (IOException ex) {
+            Constants.LOG.warning("Failed to load config: " + ex.getMessage());
+        }
+
+        return config;
+    }
+
+    private static void migrateIfNeeded(PluginConfig config, Properties properties) {
+        if (config.getConfigVersion() < 2) {
+            String language = properties.getProperty("language", "en_US");
+            config.setLocale(language);
+            config.setConfigVersion(2);
+            Constants.LOG.info("Migrated config to version 2.");
+        }
+
+        if (config.getConfigVersion() > PluginConfig.LATEST_VERSION) {
+            Constants.LOG.warning("Config version is newer than template expectations.");
+        }
+    }
+
+    private static void save(Path configFile, PluginConfig config) {
+        Properties properties = new Properties();
+        properties.setProperty("config.version", Integer.toString(config.getConfigVersion()));
+        properties.setProperty("metrics.enabled", Boolean.toString(config.isMetricsEnabled()));
+        properties.setProperty("locale", config.getLocale());
+
+        try (OutputStream output = Files.newOutputStream(configFile)) {
+            properties.store(output, "${MOD_NAME} configuration");
+        } catch (IOException ex) {
+            Constants.LOG.warning("Failed to save config: " + ex.getMessage());
+        }
+    }
+}

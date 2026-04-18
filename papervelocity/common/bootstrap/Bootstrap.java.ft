@@ -1,0 +1,30 @@
+package ${MAIN_CLASS.packageName}.bootstrap;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.command.CommandRegistry;
+import ${MAIN_CLASS.packageName}.compat.CompatibilityGuardrails;
+import ${MAIN_CLASS.packageName}.config.PluginConfig;
+import ${MAIN_CLASS.packageName}.config.PluginConfigLoader;
+import ${MAIN_CLASS.packageName}.text.Localization;
+import ${MAIN_CLASS.packageName}.text.MessageKeys;
+
+import java.nio.file.Path;
+
+public final class Bootstrap {
+
+    private Bootstrap() {
+    }
+
+    public static BootstrapContext initialize(Path dataDirectory, String platformName, String runtimeVersion) {
+        PluginConfig config = PluginConfigLoader.load(dataDirectory);
+
+        CompatibilityGuardrails.warnIfPotentiallyIncompatible(platformName, runtimeVersion, Constants.MINECRAFT_VERSION);
+
+        Localization localization = new Localization(config.getLocale());
+        CommandRegistry commandRegistry = CommandRegistry.withDefaults(localization);
+
+        Constants.LOG.info(localization.message(MessageKeys.STARTUP_LOADED, Constants.MOD_NAME, platformName, runtimeVersion));
+
+        return new BootstrapContext(config, localization, commandRegistry);
+    }
+}

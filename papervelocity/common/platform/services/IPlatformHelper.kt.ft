@@ -1,0 +1,11 @@
+package ${MAIN_CLASS.packageName}.platform.services
+
+interface IPlatformHelper {
+    val platformName: String
+
+    fun isDevelopmentEnvironment(): Boolean
+
+    fun isPaper(): Boolean = platformName.equals("paper", ignoreCase = true)
+
+    fun isVelocity(): Boolean = platformName.equals("velocity", ignoreCase = true)
+}

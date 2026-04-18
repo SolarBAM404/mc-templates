@@ -1,0 +1,16 @@
+package ${MAIN_CLASS.packageName}.platform.services;
+
+public interface IPlatformHelper {
+
+    String getPlatformName();
+
+    boolean isDevelopmentEnvironment();
+
+    default boolean isPaper() {
+        return getPlatformName().equalsIgnoreCase("paper");
+    }
+
+    default boolean isVelocity() {
+        return getPlatformName().equalsIgnoreCase("velocity");
+    }
+}

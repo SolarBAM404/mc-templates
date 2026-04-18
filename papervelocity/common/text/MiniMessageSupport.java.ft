@@ -1,0 +1,16 @@
+package ${MAIN_CLASS.packageName}.text;
+
+public final class MiniMessageSupport {
+
+    private MiniMessageSupport() {
+    }
+
+    public static boolean isAvailable() {
+        try {
+            Class.forName("net.kyori.adventure.text.minimessage.MiniMessage");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+}

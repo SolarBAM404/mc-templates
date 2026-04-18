@@ -1,0 +1,2 @@
+startup.loaded=Loaded {0} on {1} ({2})
+command.version={0} version {1}

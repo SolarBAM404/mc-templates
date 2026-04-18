@@ -1,0 +1,7 @@
+package ${MAIN_CLASS.packageName}.command;
+
+@FunctionalInterface
+public interface SimpleCommand {
+
+    String execute(String[] args);
+}

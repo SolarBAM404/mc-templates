@@ -1,0 +1,10 @@
+package ${MAIN_CLASS.packageName}.security;
+
+public final class Permissions {
+
+    public static final String COMMAND_USE = "${MOD_ID}.command.use";
+    public static final String ADMIN = "${MOD_ID}.admin";
+
+    private Permissions() {
+    }
+}

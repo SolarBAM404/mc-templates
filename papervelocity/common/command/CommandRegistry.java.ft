@@ -1,0 +1,28 @@
+package ${MAIN_CLASS.packageName}.command;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.text.Localization;
+import ${MAIN_CLASS.packageName}.text.MessageKeys;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public final class CommandRegistry {
+
+    private final Map<String, SimpleCommand> commands = new HashMap<>();
+
+    public static CommandRegistry withDefaults(Localization localization) {
+        CommandRegistry registry = new CommandRegistry();
+        registry.register("${MOD_ID}", args -> localization.message(MessageKeys.COMMAND_VERSION, Constants.MOD_NAME, "${BUILD_COORDS.version}"));
+        return registry;
+    }
+
+    public void register(String command, SimpleCommand executor) {
+        commands.put(command, executor);
+    }
+
+    public Map<String, SimpleCommand> commands() {
+        return Collections.unmodifiableMap(commands);
+    }
+}

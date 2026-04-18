@@ -1,0 +1,28 @@
+package ${MAIN_CLASS.packageName}.compat;
+
+import ${MAIN_CLASS.packageName}.Constants;
+
+public final class CompatibilityGuardrails {
+
+    private CompatibilityGuardrails() {
+    }
+
+    public static void warnIfPotentiallyIncompatible(String platformName, String runtimeVersion, String expectedMinecraftVersion) {
+        String expectedPrefix = expectedMinecraftVersion;
+        int patchIndex = expectedMinecraftVersion.lastIndexOf('.');
+        if (patchIndex > 0) {
+            expectedPrefix = expectedMinecraftVersion.substring(0, patchIndex);
+        }
+
+        if (runtimeVersion == null || runtimeVersion.isBlank()) {
+            Constants.LOG.warning("Could not determine runtime version for " + platformName + ".");
+            return;
+        }
+
+        if (!runtimeVersion.contains(expectedPrefix)) {
+            Constants.LOG.warning(
+                    "Potential version mismatch on " + platformName + ": runtime='" + runtimeVersion + "', expected around '" + expectedMinecraftVersion + "'."
+            );
+        }
+    }
+}

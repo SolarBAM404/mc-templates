@@ -1,0 +1,17 @@
+package ${MAIN_CLASS.packageName}.platform
+
+import ${MAIN_CLASS.packageName}.Constants
+import ${MAIN_CLASS.packageName}.platform.services.IPlatformHelper
+import java.util.ServiceLoader
+
+object Services {
+    val PLATFORM: IPlatformHelper = load(IPlatformHelper::class.java)
+
+    fun <T> load(clazz: Class<T>): T {
+        val loadedService = ServiceLoader.load(clazz)
+            .findFirst()
+            .orElseThrow { IllegalStateException("Failed to load service for ${clazz.name}") }
+        Constants.LOG.fine("Loaded $loadedService for service ${clazz.name}")
+        return loadedService
+    }
+}

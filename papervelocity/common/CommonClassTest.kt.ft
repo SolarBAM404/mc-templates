@@ -1,0 +1,12 @@
+package ${MAIN_CLASS.packageName}
+
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Test
+
+class CommonClassTest {
+    @Test
+    fun shouldExposeConstants() {
+        assertNotNull(Constants.MOD_ID)
+        assertNotNull(Constants.MOD_NAME)
+    }
+}
