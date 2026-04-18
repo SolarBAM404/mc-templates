@@ -52,11 +52,13 @@
     },
     {
       "name": "MINECRAFT_VERSION",
+      "label": "creator.ui.minecraft_version.label",
       "type": "string",
       "default": "26.1.2"
     },
     {
       "name": "BSTATS_PLUGIN_ID",
+      "label": "creator.ui.bstats_plugin_id.label",
       "type": "integer",
       "default": 0
     },
