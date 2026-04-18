@@ -1,0 +1,14 @@
+package ${MAIN_CLASS.packageName}.paper;
+
+import ${MAIN_CLASS.packageName}.command.CommandRegistry;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class PaperCommandBridge {
+
+    private PaperCommandBridge() {
+    }
+
+    public static void register(JavaPlugin plugin, CommandRegistry commandRegistry) {
+        plugin.getLogger().info("Command scaffold loaded with " + commandRegistry.commands().size() + " command(s).");
+    }
+}

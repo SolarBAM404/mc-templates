@@ -1,0 +1,16 @@
+package ${MAIN_CLASS.packageName}.paper;
+
+import ${MAIN_CLASS.packageName}.platform.services.IPlatformHelper;
+
+public final class PaperPlatformHelper implements IPlatformHelper {
+
+    @Override
+    public String getPlatformName() {
+        return "paper";
+    }
+
+    @Override
+    public boolean isDevelopmentEnvironment() {
+        return java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().contains("jdwp");
+    }
+}

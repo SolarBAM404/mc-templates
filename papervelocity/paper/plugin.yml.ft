@@ -1,0 +1,19 @@
+name: ${MOD_NAME}
+version: ${BUILD_COORDS.version}
+main: ${MAIN_CLASS.packageName}.paper.PaperPlugin
+api-version: '${MINECRAFT_VERSION}'
+authors:
+  - ${AUTHORS}
+description: ${DESCRIPTION}
+website: ${WEBSITE}
+commands:
+  ${MOD_ID}:
+    description: Show plugin version information
+    permission: ${MOD_ID}.command.use
+permissions:
+  ${MOD_ID}.command.use:
+    description: Allows running the ${MOD_ID} command
+    default: true
+  ${MOD_ID}.admin:
+    description: Administrative access for ${MOD_ID}
+    default: op

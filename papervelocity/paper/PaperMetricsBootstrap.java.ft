@@ -1,0 +1,28 @@
+package ${MAIN_CLASS.packageName}.paper;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.lang.reflect.Constructor;
+
+public final class PaperMetricsBootstrap {
+
+    private PaperMetricsBootstrap() {
+    }
+
+    public static void tryStart(JavaPlugin plugin, int pluginId) {
+        if (pluginId <= 0) {
+            Constants.LOG.info("Metrics enabled, but no bStats plugin id is configured.");
+            return;
+        }
+
+        try {
+            Class<?> metricsClass = Class.forName("org.bstats.bukkit.Metrics");
+            Constructor<?> constructor = metricsClass.getConstructor(JavaPlugin.class, int.class);
+            constructor.newInstance(plugin, pluginId);
+            Constants.LOG.info("bStats metrics initialized on Paper.");
+        } catch (ReflectiveOperationException ex) {
+            Constants.LOG.warning("Failed to initialize Paper bStats metrics: " + ex.getMessage());
+        }
+    }
+}

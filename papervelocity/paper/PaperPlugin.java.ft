@@ -1,0 +1,23 @@
+package ${MAIN_CLASS.packageName}.paper;
+
+import ${MAIN_CLASS.packageName}.CommonClass;
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.bootstrap.Bootstrap;
+import ${MAIN_CLASS.packageName}.bootstrap.BootstrapContext;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class PaperPlugin extends JavaPlugin {
+
+    private BootstrapContext bootstrapContext;
+
+    @Override
+    public void onEnable() {
+        bootstrapContext = Bootstrap.initialize(getDataFolder().toPath(), "paper", getServer().getMinecraftVersion());
+        CommonClass.init();
+        PaperCommandBridge.register(this, bootstrapContext.getCommandRegistry());
+
+        if (bootstrapContext.getConfig().isMetricsEnabled()) {
+            PaperMetricsBootstrap.tryStart(this, Constants.BSTATS_PLUGIN_ID);
+        }
+    }
+}
