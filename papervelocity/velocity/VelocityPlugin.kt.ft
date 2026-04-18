@@ -1,0 +1,24 @@
+package ${MAIN_CLASS.packageName}.velocity
+
+import ${MAIN_CLASS.packageName}.CommonClass
+import ${MAIN_CLASS.packageName}.Constants
+import ${MAIN_CLASS.packageName}.bootstrap.Bootstrap
+import com.google.inject.Inject
+import com.velocitypowered.api.plugin.annotation.DataDirectory
+import com.velocitypowered.api.plugin.Plugin
+import com.velocitypowered.api.proxy.ProxyServer
+import java.nio.file.Path
+
+@Plugin(id = "${MOD_ID}", name = "${MOD_NAME}", version = "${BUILD_COORDS.version}")
+class VelocityPlugin @Inject constructor(proxyServer: ProxyServer, @DataDirectory dataDirectory: Path) {
+    private val bootstrapContext = Bootstrap.initialize(dataDirectory, "velocity", proxyServer.version.version)
+
+    init {
+        CommonClass.init()
+        VelocityCommandBridge.register(bootstrapContext.commandRegistry)
+
+        if (bootstrapContext.config.isMetricsEnabled) {
+            VelocityMetricsBootstrap.tryStart(this, Constants.BSTATS_PLUGIN_ID)
+        }
+    }
+}

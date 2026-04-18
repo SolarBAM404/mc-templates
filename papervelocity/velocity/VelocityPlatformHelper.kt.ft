@@ -1,0 +1,13 @@
+package ${MAIN_CLASS.packageName}.velocity
+
+import ${MAIN_CLASS.packageName}.platform.services.IPlatformHelper
+import java.lang.management.ManagementFactory
+
+class VelocityPlatformHelper : IPlatformHelper {
+    override val platformName: String
+        get() = "velocity"
+
+    override fun isDevelopmentEnvironment(): Boolean {
+        return ManagementFactory.getRuntimeMXBean().inputArguments.toString().contains("jdwp")
+    }
+}

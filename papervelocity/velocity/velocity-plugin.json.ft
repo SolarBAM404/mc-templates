@@ -1,0 +1,11 @@
+{
+  "id": "${MOD_ID}",
+  "name": "${MOD_NAME}",
+  "version": "${BUILD_COORDS.version}",
+  "main": "${MAIN_CLASS.packageName}.velocity.VelocityPlugin",
+  "authors": [
+    "${AUTHORS}"
+  ],
+  "description": "${DESCRIPTION}",
+  "dependencies": []
+}

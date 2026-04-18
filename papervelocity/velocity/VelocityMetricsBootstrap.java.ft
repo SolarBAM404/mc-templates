@@ -1,0 +1,33 @@
+package ${MAIN_CLASS.packageName}.velocity;
+
+import ${MAIN_CLASS.packageName}.Constants;
+
+import java.lang.reflect.Constructor;
+
+public final class VelocityMetricsBootstrap {
+
+    private VelocityMetricsBootstrap() {
+    }
+
+    public static void tryStart(Object pluginInstance, int pluginId) {
+        if (pluginId <= 0) {
+            Constants.LOG.info("Metrics enabled, but no bStats plugin id is configured.");
+            return;
+        }
+
+        try {
+            Class<?> metricsClass = Class.forName("org.bstats.velocity.Metrics");
+            Constructor<?> constructor = metricsClass.getConstructors()[0];
+            Class<?>[] paramTypes = constructor.getParameterTypes();
+            Object[] args = new Object[paramTypes.length];
+            args[0] = pluginInstance;
+            if (args.length > 1) {
+                args[1] = pluginId;
+            }
+            constructor.newInstance(args);
+            Constants.LOG.info("bStats metrics initialized on Velocity.");
+        } catch (ReflectiveOperationException ex) {
+            Constants.LOG.warning("Failed to initialize Velocity bStats metrics: " + ex.getMessage());
+        }
+    }
+}

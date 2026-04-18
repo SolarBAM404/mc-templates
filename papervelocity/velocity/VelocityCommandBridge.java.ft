@@ -1,0 +1,14 @@
+package ${MAIN_CLASS.packageName}.velocity;
+
+import ${MAIN_CLASS.packageName}.Constants;
+import ${MAIN_CLASS.packageName}.command.CommandRegistry;
+
+public final class VelocityCommandBridge {
+
+    private VelocityCommandBridge() {
+    }
+
+    public static void register(CommandRegistry commandRegistry) {
+        Constants.LOG.info("Command scaffold loaded with " + commandRegistry.commands().size() + " command(s).");
+    }
+}

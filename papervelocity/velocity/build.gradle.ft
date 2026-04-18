@@ -1,0 +1,67 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
+dependencies {
+    compileOnly "com.velocitypowered:velocity-api:${velocity_api_version}"
+    annotationProcessor "com.velocitypowered:velocity-api:${velocity_api_version}"
+    implementation project(':common')
+
+    if (use_adventure.toBoolean()) {
+        compileOnly "net.kyori:adventure-api:${adventure_version}"
+        compileOnly "net.kyori:adventure-text-minimessage:${adventure_version}"
+    }
+
+    if (use_configurate.toBoolean()) {
+        implementation "org.spongepowered:configurate-yaml:${configurate_version}"
+    }
+
+    if (use_bstats.toBoolean()) {
+        implementation "org.bstats:bstats-velocity:${bstats_version}"
+    }
+
+    testImplementation "org.junit.jupiter:junit-jupiter:${junit_version}"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(velocity_java_version as int)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = velocity_java_version as int
+}
+
+if (plugins.hasPlugin('org.jetbrains.kotlin.jvm')) {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions.jvmTarget = (velocity_java_version as int).toString()
+    }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    dependencies {
+        include project(':common')
+    }
+
+    if (enable_relocations.toBoolean()) {
+        def relocationPrefix = "${project.group}.${mod_id}.libs"
+        relocate 'org.spongepowered.configurate', "${relocationPrefix}.configurate"
+        relocate 'org.yaml.snakeyaml', "${relocationPrefix}.snakeyaml"
+        relocate 'org.bstats', "${relocationPrefix}.bstats"
+    }
+}
+
+tasks.named('assemble') {
+    dependsOn tasks.named('shadowJar')
+}
+
+tasks.register('deployToVelocity', Copy) {
+    dependsOn tasks.named('shadowJar')
+    onlyIf {
+        enable_deploy_tasks.toBoolean() && velocity_plugins_dir != null && !velocity_plugins_dir.toString().trim().isEmpty()
+    }
+    from(tasks.named('shadowJar').flatMap { it.archiveFile })
+    into(file(velocity_plugins_dir))
+}

@@ -1,0 +1,16 @@
+package ${MAIN_CLASS.packageName}.velocity;
+
+import ${MAIN_CLASS.packageName}.platform.services.IPlatformHelper;
+
+public final class VelocityPlatformHelper implements IPlatformHelper {
+
+    @Override
+    public String getPlatformName() {
+        return "velocity";
+    }
+
+    @Override
+    public boolean isDevelopmentEnvironment() {
+        return java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().contains("jdwp");
+    }
+}
