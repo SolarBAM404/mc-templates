@@ -472,7 +472,12 @@
     {
       "template": "fabric/providers/ModItemTagProvider.java.ft",
       "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModItemTagProvider.java",
-      "condition": "${MC_VERSION} != '1.21.11' && ${MC_VERSION} != '26.1'"
+      "condition": "${MC_VERSION} == '1.20.1'"
+    },
+    {
+      "template": "fabric/providers/1.21.1 ModItemTagProvider.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.packagePath}/datagen/providers/ModItemTagProvider.java",
+      "condition": "${MC_VERSION} == '1.21.1'"
     },
     {
       "template": "fabric/providers/1.21.11 ModItemTagProvider.java.ft",
