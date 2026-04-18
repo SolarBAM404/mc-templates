@@ -1,0 +1,102 @@
+plugins {
+    id 'java-library'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id 'org.jetbrains.kotlin.jvm' version '2.2.0' apply false
+    id 'com.diffplug.spotless' version '7.2.1' apply false
+}
+
+allprojects {
+    group = '${BUILD_COORDS.groupId}'
+    version = '${BUILD_COORDS.version}'
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'com.diffplug.spotless'
+    apply plugin: 'pmd'
+
+    if ((findProperty('language') ?: 'java') == 'kotlin') {
+        apply plugin: 'org.jetbrains.kotlin.jvm'
+    }
+
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'Paper'
+            url = uri('https://repo.papermc.io/repository/maven-public/')
+        }
+        maven {
+            name = 'Velocity'
+            url = uri('https://nexus.velocitypowered.com/repository/maven-public/')
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(java_version as int)
+        }
+        withSourcesJar()
+    }
+
+    if (plugins.hasPlugin('org.jetbrains.kotlin.jvm')) {
+        kotlin {
+            jvmToolchain(java_version as int)
+        }
+
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions.jvmTarget = (java_version as int).toString()
+        }
+    }
+
+    spotless {
+        java {
+            target 'src/*/java/**/*.java'
+            googleJavaFormat('1.28.0')
+        }
+
+        if (plugins.hasPlugin('org.jetbrains.kotlin.jvm')) {
+            kotlin {
+                target 'src/*/kotlin/**/*.kt'
+                ktlint('1.7.1')
+            }
+        }
+
+        format 'misc' {
+            target '*.gradle', '*.md', '.gitignore'
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+    }
+
+    pmd {
+        toolVersion = pmd_version
+        consoleOutput = true
+        ruleSets = [
+                'category/java/bestpractices.xml',
+                'category/java/errorprone.xml'
+        ]
+    }
+
+    tasks.withType(org.gradle.api.plugins.quality.Pmd).configureEach {
+        reports {
+            xml.required = false
+            html.required = true
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = java_version as int
+    }
+
+    tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+        if (enable_reproducible_builds.toBoolean()) {
+            preserveFileTimestamps = false
+            reproducibleFileOrder = true
+        }
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}

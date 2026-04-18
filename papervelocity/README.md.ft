@@ -1,0 +1,132 @@
+# ${MOD_NAME}
+
+A shared Paper + Velocity plugin project generated from the papervelocity template.
+
+## Modules
+
+- `common`: shared code for both platforms
+- `paper`: Paper entrypoint and platform integration
+- `velocity`: Velocity entrypoint and platform integration
+
+## Requirements
+
+- Java toolchains:
+  - Paper: Java `${paper_java_version}`
+  - Velocity: Java `${velocity_java_version}`
+- Gradle
+
+## Common Commands
+
+- Build everything:
+
+```bash
+gradle build
+```
+
+- Run formatting checks:
+
+```bash
+gradle spotlessCheck
+```
+
+- Apply formatting fixes:
+
+```bash
+gradle spotlessApply
+```
+
+- Run PMD:
+
+```bash
+gradle pmdMain
+```
+
+- Run tests:
+
+```bash
+gradle test
+```
+
+## Local Dev Deploy Tasks
+
+Enable local deploy tasks in `gradle.properties`:
+
+```properties
+enable_deploy_tasks=true
+paper_plugins_dir=C:/servers/paper/plugins
+velocity_plugins_dir=C:/servers/velocity/plugins
+```
+
+Then copy plugin jars directly to your server plugin folders:
+
+```bash
+gradle :paper:deployToPaper
+gradle :velocity:deployToVelocity
+```
+
+## Key Gradle Properties
+
+### Platform and Java
+
+- `minecraft_version`: target Minecraft baseline used for metadata/guardrails
+- `paper_api_version`: Paper API version
+- `velocity_api_version`: Velocity API version
+- `paper_java_version`: Java target for `paper`
+- `velocity_java_version`: Java target for `velocity`
+
+### Language
+
+- `language`: `java` or `kotlin`
+- `kotlin_version`: Kotlin plugin version
+
+### Optional Libraries
+
+- `use_adventure`: include Adventure API helpers
+- `adventure_version`: Adventure version
+- `use_configurate`: include Configurate config stack
+- `configurate_version`: Configurate version
+
+### Metrics
+
+- `use_bstats`: enables bStats dependencies
+- `bstats_version`: bStats dependency version
+- `bstats_plugin_id`: bStats plugin id (set this to a real id when publishing)
+
+### Quality and Testing
+
+- `junit_version`: JUnit Jupiter version
+- `use_mockbukkit`: enable MockBukkit tests for Paper
+- `mockbukkit_version`: MockBukkit version
+- `pmd_version`: PMD version
+
+### Build Behavior
+
+- `enable_relocations`: enable dependency relocation in shaded jars
+- `enable_reproducible_builds`: deterministic jar ordering/timestamps
+- `enable_deploy_tasks`: enable local copy tasks for Paper/Velocity outputs
+
+## Compatibility Guardrails
+
+Startup includes a compatibility warning if runtime server version appears outside the expected Minecraft baseline.
+
+## Config Migration
+
+A versioned config scaffold is included:
+
+- current version in `PluginConfig.LATEST_VERSION`
+- migration entrypoint in `PluginConfigLoader.migrateIfNeeded(...)`
+
+Use this when adding or renaming config keys across releases.
+
+## Commands, Permissions, and Localization
+
+Included scaffolding:
+
+- shared command registry in `common/command`
+- shared permission constants in `common/security/Permissions`
+- localization keys/messages in `common/text` and `common/src/main/resources/messages.properties`
+- optional MiniMessage availability checks in startup logs
+
+## CI
+
+If Git is enabled, a default GitHub Actions workflow is generated at `.github/workflows/ci.yml` to run build + quality checks on push and pull requests.

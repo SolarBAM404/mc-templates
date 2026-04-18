@@ -1,0 +1,52 @@
+# Project
+version=${BUILD_COORDS.version}
+group=${BUILD_COORDS.groupId}
+language=${LANGUAGE}
+java_version=21
+kotlin_version=2.2.0
+
+# Platform
+minecraft_version=${MINECRAFT_VERSION}
+paper_api_version=26.1.2.build.+
+velocity_api_version=3.5.0-SNAPSHOT
+paper_java_version=25
+velocity_java_version=21
+
+# Compatibility guardrails
+enable_version_guardrails=true
+
+# Optional libraries
+use_adventure=true
+adventure_version=4.25.0
+use_configurate=false
+configurate_version=4.2.0
+use_bstats=false
+bstats_version=3.1.0
+bstats_plugin_id=${BSTATS_PLUGIN_ID}
+
+# Shading
+enable_relocations=true
+enable_reproducible_builds=true
+
+# Development workflow
+enable_deploy_tasks=false
+paper_plugins_dir=
+velocity_plugins_dir=
+
+# Quality and tests
+junit_version=5.13.0
+use_mockbukkit=false
+mockbukkit_version=3.131.0
+pmd_version=7.13.0
+
+# Common
+mod_name=${MOD_NAME}
+mod_author=${AUTHORS}
+mod_id=${MOD_ID}
+license=${LICENSE.id}
+description=${DESCRIPTION}
+website=${WEBSITE}
+
+# Gradle
+org.gradle.jvmargs=-Xmx3G
+org.gradle.daemon=false
